@@ -10,6 +10,9 @@ int g_targetFPS;
 int g_windowW; 
 int g_windowH;
 char* g_windowTitle;
+int g_camSpeed;
+int g_camMvTreshold;
+float g_dt;
 
 void defaultGlobals(void) {
     g_dFont = LoadFontEx("../resources/fonts/font1.ttf", 48, NULL, 0);
@@ -19,12 +22,18 @@ void defaultGlobals(void) {
     g_windowTitle = "Lab Geek";
     g_windowW = 500;
     g_windowH = 500;
+    g_camSpeed = 250;
+    g_camMvTreshold = g_dCam.offset.x / 2;
 }
 
 void initCam (Vector2 target, float rotation, float zoom) {
     g_dCam.target = target;
     g_dCam.zoom = zoom;
     g_dCam.rotation = rotation;
+}
+
+void delta (void) {
+    g_dt = GetFrameTime();
 }
 
 #endif
