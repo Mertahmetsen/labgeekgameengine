@@ -13,6 +13,7 @@ char* g_windowTitle;
 int g_camSpeed;
 int g_camMvTreshold;
 float g_dt;
+int g_dRefWinWidth; // window size reference, g_dCam.zoom scales with this.
 
 void defaultGlobals(void) {
     g_dFont = LoadFontEx("../resources/fonts/font1.ttf", 48, NULL, 0);
@@ -20,10 +21,11 @@ void defaultGlobals(void) {
     g_dCam.offset = vec(GetScreenWidth()/2.0f, GetScreenHeight()/2.0f);
     g_targetFPS = 60;
     g_windowTitle = "Lab Geek";
-    g_windowW = 500;
-    g_windowH = 500;
+    g_windowW = 1024;
+    g_windowH = 768;
     g_camSpeed = 250;
     g_camMvTreshold = g_dCam.offset.x / 2;
+    g_dRefWinWidth = 800;
 }
 
 void initCam (Vector2 target, float rotation, float zoom) {
