@@ -20,12 +20,15 @@ void defaultGlobals(void) {
     g_dTbColor = WHITE;
     g_dCam.offset = vec(GetScreenWidth()/2.0f, GetScreenHeight()/2.0f);
     g_targetFPS = 60;
-    g_windowTitle = "Lab Geek";
-    g_windowW = 1024;
-    g_windowH = 768;
     g_camSpeed = 250;
     g_camMvTreshold = g_dCam.offset.x / 2;
     g_dRefWinWidth = 800;
+}
+
+void preWinInitGlobals(void) {
+    g_windowTitle = "Lab Geek";
+    g_windowW = 1024;
+    g_windowH = 768;
 }
 
 void initCam (Vector2 target, float rotation, float zoom) {

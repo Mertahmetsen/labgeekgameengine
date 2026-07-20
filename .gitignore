@@ -1,1 +1,4 @@
 main.c
+compile.sh
+logs/gcclog.log
+logs
