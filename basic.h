@@ -20,10 +20,16 @@ typedef struct {
   bool enabled;
 } Render_t;
 
+typedef struct {
+  int x;
+  int y;
+} IntVector;
+
 #define clr(r, g, b, a) (Color) {(uchar)r, (uchar)g, (uchar)b, (uchar)a}
 #define rct(x, y, w, h) (Rectangle) {(float)x, (float)y, (float)w, (float)h}
 #define vec(x, y) ((Vector2) {(float)x, (float)y})
 #define ropt(src, dst, origin, rot, t) (RenderOptions) {src,dst,origin,rot,t}
+#define ivec(x, y) (IntVector) {(int)x, (int)y}
 
 Rectangle boundary (float x, float y, const char* text, Font font) {
   const Vector2 size = MeasureTextEx(font, text, GuiGetStyle(DEFAULT, TEXT_SIZE), GuiGetStyle(DEFAULT, TEXT_SPACING));

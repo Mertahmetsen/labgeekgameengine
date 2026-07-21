@@ -1,8 +1,9 @@
 #ifndef MERAHM_TEXTURE
 #define MERAHM_TEXTURE
 #include "globals.h"
+#include "render-groups.h"
 
-int countEmptyInRenderList (void) {
+/*int countUsedInRenderList (void) {
     int cntr = 0;
     for (int i=0; i<RENDER_LIST_SIZE; ++i) {
         if (g_renders[i].texture.id != 0) {
@@ -10,7 +11,7 @@ int countEmptyInRenderList (void) {
         }
     }
     return cntr;
-}
+}*/
 
 int findSlotInRenderList (void) {
     for (int i=0; i<RENDER_LIST_SIZE; ++i) {
@@ -22,8 +23,8 @@ int findSlotInRenderList (void) {
 }
 
 int addToRenderList (Texture2D texture, RenderOptions options) {
-    if (findSlotInRenderList() == -1) return -1;
     int slot = findSlotInRenderList();
+    if (slot == -1) return -1;
     g_renders[slot].texture = texture;
     g_renders[slot].options = options;
     return slot;
@@ -46,15 +47,32 @@ void switchRenderPriority(int slot1, int slot2) {
 #define decreaseRenderPriority(x, n) switchRenderPriority(x, x - n)
 
 void render (void) {
+    if (g_useRenderGroups == false) {
     for (int i=RENDER_LIST_SIZE-1; i>=0; --i) {
         if (g_renders[i].texture.id != 0 && g_renders[i].enabled == true) {
-        DrawTexturePro(
-        g_renders[i].texture,
-        g_renders[i].options.srcrec,
-        g_renders[i].options.dstrec,
-        g_renders[i].options.origin,
-        g_renders[i].options.rotation,
-        g_renders[i].options.tint);
+            DrawTexturePro(
+            g_renders[i].texture,
+            g_renders[i].options.srcrec,
+            g_renders[i].options.dstrec,
+            g_renders[i].options.origin,
+            g_renders[i].options.rotation,
+            g_renders[i].options.tint);
+        }
+    }
+    } else {
+        for (int i=RENDER_GROUPS_LIST_SIZE-1; i>=0; --i) {
+            if (!validateRenderGroup(g_renderGroups[i])) continue;
+            for (int j=g_renderGroups[i].y; j>=g_renderGroups[i].x; --j) {
+                if (g_renders[j].texture.id == 0 || !g_renders[j].enabled) continue;
+                DrawTexturePro(
+                    g_renders[j].texture,
+                    g_renders[j].options.srcrec,
+                    g_renders[j].options.dstrec,
+                    g_renders[j].options.origin,
+                    g_renders[j].options.rotation,
+                    g_renders[j].options.tint
+                );
+            }
         }
     }
 }
