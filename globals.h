@@ -14,7 +14,7 @@ int g_camSpeed;
 int g_camMvTreshold;
 float g_dt;
 int g_dRefWinWidth; // window size reference, g_dCam.zoom scales with this.
-#define RENDER_LIST_SIZE 256
+#define RENDER_LIST_SIZE 2048
 Texture2D g_renderList[RENDER_LIST_SIZE]; // Useful for culling?
 RenderOptions g_renderOptions[RENDER_LIST_SIZE];
 
