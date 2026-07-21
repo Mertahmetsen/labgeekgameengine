@@ -46,7 +46,7 @@ void switchRenderPriority(int slot1, int slot2) {
 #define decreaseRenderPriority(x, n) switchRenderPriority(x, x - n)
 
 void render (void) {
-    for (int i=0; i<RENDER_LIST_SIZE; ++i) {
+    for (int i=RENDER_LIST_SIZE-1; i>=0; --i) {
         if (g_renders[i].texture.id != 0 && g_renders[i].enabled == true) {
         DrawTexturePro(
         g_renders[i].texture,
