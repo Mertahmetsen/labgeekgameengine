@@ -15,8 +15,7 @@ int g_camMvTreshold;
 float g_dt;
 int g_dRefWinWidth; // window size reference, g_dCam.zoom scales with this.
 #define RENDER_LIST_SIZE 2048
-Texture2D g_renderList[RENDER_LIST_SIZE]; // Useful for culling?
-RenderOptions g_renderOptions[RENDER_LIST_SIZE];
+Render_t g_renders[RENDER_LIST_SIZE]; // more forward-compatible
 
 void defaultGlobals(void) {
     g_dFont = LoadFontEx("../resources/fonts/font1.ttf", 48, NULL, 0);
@@ -27,8 +26,9 @@ void defaultGlobals(void) {
     g_camMvTreshold = g_dCam.offset.x / 2;
     g_dRefWinWidth = 800;
     for (int i=0; i<RENDER_LIST_SIZE; ++i) {
-        g_renderList[i] = (Texture){0};
-        g_renderOptions[i] = (RenderOptions){0};
+        g_renders[i].texture = (Texture){0};
+        g_renders[i].options = (RenderOptions){0};
+        g_renders[i].enabled = false;
     }
 }
 

@@ -14,6 +14,12 @@ typedef struct {
   Color tint;
 } RenderOptions;
 
+typedef struct {
+  Texture2D texture;
+  RenderOptions options;
+  bool enabled;
+} Render_t;
+
 #define clr(r, g, b, a) (Color) {(uchar)r, (uchar)g, (uchar)b, (uchar)a}
 #define rct(x, y, w, h) (Rectangle) {(float)x, (float)y, (float)w, (float)h}
 #define vec(x, y) ((Vector2) {(float)x, (float)y})
