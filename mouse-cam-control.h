@@ -14,7 +14,12 @@ int decideDirection (void) { // -1 is left, 0 is stationary, 1 is right
 }
 
 void smoothCamMovement (void) {
+    if (g_camLocked == true) return;
     g_dCam.target.x = g_dCam.target.x + (g_dt * g_camSpeed * decideDirection());
+}
+
+void lockCam (bool state) {
+    g_camLocked = state;
 }
 
 #endif

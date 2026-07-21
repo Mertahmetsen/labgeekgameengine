@@ -16,6 +16,8 @@ float g_dt;
 int g_dRefWinWidth; // window size reference, g_dCam.zoom scales with this.
 #define RENDER_LIST_SIZE 2048
 Render_t g_renders[RENDER_LIST_SIZE]; // more forward-compatible
+bool g_camLocked;
+Vector2 g_mousePos;
 
 void defaultGlobals(void) {
     g_dFont = LoadFontEx("../resources/fonts/font1.ttf", 48, NULL, 0);
@@ -30,6 +32,8 @@ void defaultGlobals(void) {
         g_renders[i].options = (RenderOptions){0};
         g_renders[i].enabled = false;
     }
+    g_camLocked = false;
+    g_mousePos = GetMousePosition();
 }
 
 void preWinInitGlobals(void) {
