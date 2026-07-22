@@ -11,5 +11,6 @@
 #include "../ui/textbox-raygui.h"
 #include "../ui/window-pos.h"
 #include "../fundamental/time.h"
+#include "../ui/dialoguebox.h"
 
 #endif

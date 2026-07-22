@@ -29,6 +29,19 @@ typedef enum {
   TOPLEFT, TOPRIGHT, BOTLEFT, BOTRIGHT, MID
 } WindowPos;
 
+typedef struct {
+  const char* text;
+  Font font;
+  float fontSize;
+  float spacing;
+  WindowPos position;
+  Color color;
+  Color outline;
+  Color textColor;
+} DialogueBox; // its actually a monologue box, but i cant be bothered
+
+
+// TODO : FIX MACRO TYPECASTINGS
 #define clr(r, g, b, a) (Color) {(uchar)r, (uchar)g, (uchar)b, (uchar)a}
 #define rct(x, y, w, h) (Rectangle) {(float)x, (float)y, (float)w, (float)h}
 #define vec(x, y) ((Vector2) {(float)x, (float)y})
@@ -39,6 +52,11 @@ typedef enum {
 Rectangle boundary (float x, float y, const char* text, Font font) {
   const Vector2 size = MeasureTextEx(font, text, GuiGetStyle(DEFAULT, TEXT_SIZE), GuiGetStyle(DEFAULT, TEXT_SPACING));
   return (Rectangle) {x, y, size.x, size.y};
+}
+
+Rectangle boundaryEx (float x, float y, const char* text, Font font, float fontsize, float spacing) {
+  Vector2 size = MeasureTextEx(font, text, fontsize, spacing);
+  return (Rectangle){ x, y, size.x, size.y };
 }
 
 void guiSetAll (Font f, int textsize, int textspacing, int borderwidth) {

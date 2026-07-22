@@ -21,6 +21,10 @@ Vector2 g_mousePos;
 #define RENDER_GROUPS_LIST_SIZE 32
 IntVector g_renderGroups[RENDER_GROUPS_LIST_SIZE]; // x->min, y->max
 bool g_useRenderGroups;
+int g_smoothingSegments;
+IntVector g_tBoxSlideLength;
+float g_tBoxRoundness;
+IntVector g_tBoxTextSlideLength;
 
 void defaultGlobals(void) {
     g_dFont = LoadFontEx("../resources/fonts/font1.ttf", 48, NULL, 0);
@@ -41,6 +45,10 @@ void defaultGlobals(void) {
         g_renderGroups[i] = (IntVector){0};
     }
     g_useRenderGroups = true;
+    g_smoothingSegments = 10;
+    g_tBoxSlideLength = ivec(20,20);
+    g_tBoxRoundness = 0.1f;
+    g_tBoxTextSlideLength = ivec(2,2);
 }
 
 void preWinInitGlobals(void) {
