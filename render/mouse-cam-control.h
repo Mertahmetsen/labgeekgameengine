@@ -1,6 +1,6 @@
 #ifndef MERAHM_MOUSE_CAM_SMOOTH_CONTROL
 #define MERAHM_MOUSE_CAM_SMOOTH_CONTROL
-#include "globals.h"
+#include "../fundamental/globals.h"
 
 int decideDirection (void) { // -1 is left, 0 is stationary, 1 is right
     const int mouse = GetMouseX();

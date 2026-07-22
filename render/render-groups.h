@@ -1,6 +1,6 @@
 #ifndef MERAHM_RENDER_GROUPS
 #define MERAHM_RENDER_GROUPS
-#include "globals.h"
+#include "../fundamental/globals.h"
 
 int findEmptyRenderGroup (void) {
     for (int i=0; i<RENDER_GROUPS_LIST_SIZE; ++i) {

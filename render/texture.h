@@ -1,6 +1,6 @@
 #ifndef MERAHM_TEXTURE
 #define MERAHM_TEXTURE
-#include "globals.h"
+#include "../fundamental/globals.h"
 #include "render-groups.h"
 
 /*int countUsedInRenderList (void) {

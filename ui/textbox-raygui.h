@@ -1,7 +1,7 @@
 #ifndef MERAHM_TEXTBOX_RAYGUI
 #define MERAHM_TEXTBOX_RAYGUI
 
-#include "basic.h"
+#include "../fundamental/basic.h"
 
 void prepTbBckgrnd(Rectangle bound, Color tbcolor) {
     DrawRectangle(bound.x, bound.y, bound.width, bound.height, tbcolor);
