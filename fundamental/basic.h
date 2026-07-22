@@ -34,6 +34,7 @@ typedef enum {
 #define vec(x, y) ((Vector2) {(float)x, (float)y})
 #define ropt(src, dst, origin, rot, t) (RenderOptions) {src,dst,origin,rot,t}
 #define ivec(x, y) (IntVector) {(int)x, (int)y}
+#define roptbasic(pos, texture, t) (RenderOptions) {rct(0,0,texture.width, texture.height),rct(pos.x, pos.y, texture.width,texture.height),vec(0,0),0.0f,t}
 
 Rectangle boundary (float x, float y, const char* text, Font font) {
   const Vector2 size = MeasureTextEx(font, text, GuiGetStyle(DEFAULT, TEXT_SIZE), GuiGetStyle(DEFAULT, TEXT_SPACING));
