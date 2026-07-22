@@ -25,6 +25,10 @@ typedef struct {
   int y;
 } IntVector;
 
+typedef enum {
+  TOPLEFT, TOPRIGHT, BOTLEFT, BOTRIGHT, MID
+} WindowPos;
+
 #define clr(r, g, b, a) (Color) {(uchar)r, (uchar)g, (uchar)b, (uchar)a}
 #define rct(x, y, w, h) (Rectangle) {(float)x, (float)y, (float)w, (float)h}
 #define vec(x, y) ((Vector2) {(float)x, (float)y})
