@@ -45,8 +45,8 @@ void defaultGlobals(void) {
 
 void preWinInitGlobals(void) {
     g_windowTitle = "Lab Geek";
-    g_windowW = 600;
-    g_windowH = 400;
+    g_windowW = 1024;
+    g_windowH = 768;
 }
 
 void initCam (Vector2 target, float rotation, float zoom) {
