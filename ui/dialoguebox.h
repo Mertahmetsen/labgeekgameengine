@@ -45,4 +45,29 @@ void drawDialogueBox (DialogueBox dbox, float* cdown, bool* enabled) {
     DrawText(TextFormat("%f,%f", tboxBounds.x, tboxBounds.y), -400, 160, 20, RED);
 }
 
+void drawDialogueBoxes (DialogueBox* dboxes, const float* cdowns, size_t count) { // MIGHT have a memory leak idk
+    static float* cds = NULL;
+    static size_t cap = 0, currentbox = 0;
+    static bool* states = NULL;
+    static bool fullinit = false;
+    if (cap != count) {
+        free(cds);
+        cds = malloc(count * sizeof(float));
+        free(states);
+        states = malloc(count * sizeof(bool));
+        cap = count;
+        fullinit = false;
+    }
+    if (!fullinit) {
+        memcpy(cds, cdowns, count * sizeof(float));
+        for (size_t i=0; i<count; ++i) {
+            states[i] = true;
+        }
+        fullinit = true;
+    }
+    while (currentbox < count && !states[currentbox]) currentbox++;
+    if (currentbox >= count) return;
+    drawDialogueBox(dboxes[currentbox], &cds[currentbox], &states[currentbox]);
+}
+
 #endif

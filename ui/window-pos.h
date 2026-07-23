@@ -6,9 +6,9 @@
 IntVector getWindowPos (WindowPos pos) {
     switch (pos) {
         case TOPRIGHT:
-            return ivec(0, g_windowH);
-        case BOTLEFT:
             return ivec(g_windowW, 0);
+        case BOTLEFT:
+            return ivec(0, g_windowH);
         case BOTRIGHT:
             return ivec(g_windowW, g_windowH);
         case MID:
