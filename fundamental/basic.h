@@ -41,12 +41,11 @@ typedef struct {
 } DialogueBox; // its actually a monologue box, but i cant be bothered
 
 
-// TODO : FIX MACRO TYPECASTINGS
-#define clr(r, g, b, a) (Color) {(uchar)r, (uchar)g, (uchar)b, (uchar)a}
-#define rct(x, y, w, h) (Rectangle) {(float)x, (float)y, (float)w, (float)h}
-#define vec(x, y) ((Vector2) {(float)x, (float)y})
+#define clr(r, g, b, a) (Color) {(uchar)(r), (uchar)(g), (uchar)(b), (uchar)(a)}
+#define rct(x, y, w, h) (Rectangle) {(float)(x), (float)(y), (float)(w), (float)(h)}
+#define vec(x, y) ((Vector2) {(float)(x), (float)(y)})
 #define ropt(src, dst, origin, rot, t) (RenderOptions) {src,dst,origin,rot,t}
-#define ivec(x, y) (IntVector) {(int)x, (int)y}
+#define ivec(x, y) (IntVector) {(int)(x), (int)(y)}
 #define roptbasic(pos, texture, t) (RenderOptions) {rct(0,0,texture.width, texture.height),rct(pos.x, pos.y, texture.width,texture.height),vec(0,0),0.0f,t}
 
 Rectangle boundary (float x, float y, const char* text, Font font) {
