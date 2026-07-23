@@ -1,5 +1,5 @@
 # Lab Geek Game Engine
-The GitHub repository of the indie narrative job simulator and puzzle game Lab Geek Game Engine (LGGE), developed by \_\_merahm\_\_ and ra1n. Written entirely on C11 using [Raylib](https://github.com/raysan5/raylib) and [RayGUI](https://github.com/raysan5/raygui) libraries.
+The GitHub repository of the engine the indie narrative job simulator and puzzle game Lab Geek uses: Lab Geek Game Engine (LGGE), developed by \_\_merahm\_\_ and ra1n. Written entirely on C11 using [Raylib](https://github.com/raysan5/raylib) and [RayGUI](https://github.com/raysan5/raygui) libraries.
 ## How to Compile using LGGE
 LGGE is a header-only library, which means you don't have to do any compilation to get it to work properly. All you have to do is include the desired headers in your source code (you can use the include-all.h header inside the "independent" folder to include every header in the library.).
 
