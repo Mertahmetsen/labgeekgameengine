@@ -9,7 +9,7 @@ LGGE uses [Raylib](https://github.com/raysan5/raylib) and [RayGUI](https://githu
 
 LGGE is developed on a linux computer. Since both Raylib and RayGUI are cross-platform libraries, on theory, LGGE can work on every platform Raylib and RayGUI supports. However, by the time this file is being written, **this hasn't been tested yet**.
 ## Contacts
-- [Lab Geek Game Engine's official mail account](labgeekproject@gmail.com)
-- [\_\_merahm\_\_'s mail account](mertahmetsen@gmail.com)
+- [Lab Geek Game Engine's official mail account: labgeekproject@gmail.com](mailto:labgeekproject@gmail.com)
+- [\_\_merahm\_\_'s mail account: mertahmetsen@gmail.com](mailto:mertahmetsen@gmail.com)
 - [\_\_merahm\_\_'s github page](https://github.com/Mertahmetsen)
 - [ra1n's github page](https://github.com/ra1n321)
