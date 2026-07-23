@@ -30,7 +30,7 @@ typedef enum {
 } WindowPos;
 
 typedef struct {
-  const char* text;
+  char* text;
   Font font;
   float fontSize;
   float spacing;

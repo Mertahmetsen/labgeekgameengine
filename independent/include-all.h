@@ -12,5 +12,6 @@
 #include "../ui/window-pos.h"
 #include "../fundamental/time.h"
 #include "../ui/dialoguebox.h"
+#include "../io/tokenize.h"
 
 #endif
