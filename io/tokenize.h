@@ -3,25 +3,19 @@
 #include <string.h>
 #include "raylib.h"
 
-static char* str = NULL;
-static char* rest = NULL;
-
-char* loadAndTokenize(const char* path, const char* delim) {
-    if (str == NULL) {
-        str = LoadFileText(path);
-        if (!str) return NULL;
-        rest = str;
+char *loadAndTokenize(const char *path, const char *delim)
+{
+    static char *text = NULL;
+    static char *rest = NULL;
+    if (path != NULL)
+    {
+        if (text) UnloadFileText(text);
+        text = LoadFileText(path);
+        if (!text) return NULL;
+        rest = text;
+        return strtok_r(text, delim, &rest);
     }
-    char* token = strtok_r(NULL, delim, &rest);
-    return token;
-}
-
-void resetTokenizer(void) {
-    if (str) {
-        UnloadFileText(str);
-        str = NULL;
-        rest = NULL;
-    }
+    return strtok_r(NULL, delim, &rest);
 }
 
 #endif

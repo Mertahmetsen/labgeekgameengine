@@ -13,5 +13,6 @@
 #include "../fundamental/time.h"
 #include "../ui/dialoguebox.h"
 #include "../io/tokenize.h"
+#include "../io/dbox-parse.h"
 
 #endif
