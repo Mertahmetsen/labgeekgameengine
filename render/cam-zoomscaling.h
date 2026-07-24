@@ -3,7 +3,10 @@
 #include "../fundamental/globals.h"
 
 void camZoomscale (void) {
-    g_dCam.zoom = GetScreenWidth() / (float)g_dRefWinWidth;
+    float scaleX = GetScreenWidth() / g_dRefWinWidth;
+    float scaleY = GetScreenHeight() / g_dRefWinHeight;
+
+    g_dCam.zoom = (scaleX < scaleY) ? scaleX : scaleY;
 }
 
 #endif

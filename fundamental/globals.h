@@ -13,7 +13,8 @@ char* g_windowTitle;
 int g_camSpeed;
 int g_camMvTreshold;
 float g_dt;
-int g_dRefWinWidth; // window size reference, g_dCam.zoom scales with this.
+float g_dRefWinWidth; // window size reference, g_dCam.zoom scales with this.
+float g_dRefWinHeight;
 #define RENDER_LIST_SIZE 2048
 Render_t g_renders[RENDER_LIST_SIZE]; // more forward-compatible
 bool g_camLocked;
@@ -33,7 +34,8 @@ void defaultGlobals(void) {
     g_targetFPS = 60;
     g_camSpeed = 250;
     g_camMvTreshold = g_dCam.offset.x / 2;
-    g_dRefWinWidth = 800;
+    g_dRefWinWidth = 800.0f;
+    g_dRefWinHeight = 600.0f;
     for (int i=0; i<RENDER_LIST_SIZE; ++i) {
         g_renders[i].texture = (Texture){0};
         g_renders[i].options = (RenderOptions){0};
@@ -53,8 +55,8 @@ void defaultGlobals(void) {
 
 void preWinInitGlobals(void) {
     g_windowTitle = "Lab Geek";
-    g_windowW = 1024;
-    g_windowH = 768;
+    g_windowW = 640;
+    g_windowH = 100;
 }
 
 void initCam (Vector2 target, float rotation, float zoom) {
