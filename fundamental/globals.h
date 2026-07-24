@@ -16,8 +16,7 @@ float g_dt;
 int g_dRefWinWidth; // window size reference, g_dCam.zoom scales with this.
 #define RENDER_LIST_SIZE 2048
 Render_t g_renders[RENDER_LIST_SIZE]; // more forward-compatible
-bool g_camLockedL;
-bool g_camLockedR;
+bool g_camLocked;
 Vector2 g_mousePos;
 #define RENDER_GROUPS_LIST_SIZE 32
 IntVector g_renderGroups[RENDER_GROUPS_LIST_SIZE]; // x->min, y->max
@@ -40,8 +39,7 @@ void defaultGlobals(void) {
         g_renders[i].options = (RenderOptions){0};
         g_renders[i].enabled = false;
     }
-    g_camLockedL = false;
-    g_camLockedR = false;
+    g_camLocked = false;
     g_mousePos = GetMousePosition();
     for (int i=0; i<RENDER_GROUPS_LIST_SIZE; ++i) {
         g_renderGroups[i] = (IntVector){0};
