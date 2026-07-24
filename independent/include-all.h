@@ -14,5 +14,6 @@
 #include "../ui/dialoguebox.h"
 #include "../io/tokenize.h"
 #include "../io/dbox-parse.h"
+#include "../render/cam-oob-chk.h"
 
 #endif
