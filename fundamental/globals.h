@@ -11,7 +11,8 @@ int g_windowW;
 int g_windowH;
 char* g_windowTitle;
 int g_camSpeed;
-int g_camMvTreshold;
+int g_camMvTresholdX;
+int g_camMvTresholdY;
 float g_dt;
 float g_dRefWinWidth; // window size reference, g_dCam.zoom scales with this.
 float g_dRefWinHeight;
@@ -33,7 +34,8 @@ void defaultGlobals(void) {
     g_dCam.offset = vec(GetScreenWidth()/2.0f, GetScreenHeight()/2.0f);
     g_targetFPS = 60;
     g_camSpeed = 250;
-    g_camMvTreshold = g_dCam.offset.x / 2;
+    g_camMvTresholdX = g_dCam.offset.x / 2;
+    g_camMvTresholdY = g_dCam.offset.y / 2;
     g_dRefWinWidth = 800.0f;
     g_dRefWinHeight = 600.0f;
     for (int i=0; i<RENDER_LIST_SIZE; ++i) {
