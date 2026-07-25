@@ -65,10 +65,12 @@ void initCam (Vector2 target, float rotation, float zoom) {
     g_dCam.target = target;
     g_dCam.zoom = zoom;
     g_dCam.rotation = rotation;
+    traceFuncInfo(__func__, TextFormat("Initialized global camera: target=(%f,%f), zoom=%d, rotation=%f", target.x, target.y, zoom, rotation));
 }
 
 void delta (void) {
     g_dt = GetFrameTime();
+    traceFuncInfo(__func__, TextFormat("A frame takes %f milliseconds", g_dt*1000.0f));
 }
 
 #endif

@@ -5,7 +5,14 @@
 #include "../fundamental/time.h"
 
 void drawDialogueBox (DialogueBox dbox, float* cdown, bool* enabled) {
-    if (!enabled || !cdown || !(*enabled)) return;
+    if (!enabled || !cdown) {
+        traceFuncErr(__func__, "Invalid pointers as parameters");
+        return;
+    }
+    if (!(*enabled)) {
+        traceFuncInfo(__func__, "Dialogue box is not enabled, not drawing");
+        return;
+    }
     // get the textbox position
     IntVector tboxPos = getWindowPos(dbox.position);
     // get the boundary
@@ -36,16 +43,16 @@ void drawDialogueBox (DialogueBox dbox, float* cdown, bool* enabled) {
     // calculate where to draw the text
     IntVector textPos = ivec(tboxBounds.x + g_tBoxTextSlideLength.x, tboxBounds.y + g_tBoxTextSlideLength.y);
     // draw the bubble and the text
+    traceFuncInfo(__func__, "Drawing textbox");
     DrawRectangleRounded(tboxBounds, g_tBoxRoundness, g_smoothingSegments, dbox.color);
     DrawRectangleRoundedLines(tboxBounds, g_tBoxRoundness, g_smoothingSegments, dbox.outline);
     DrawTextPro(dbox.font, dbox.text, vec(textPos.x, textPos.y), vec(0,0), 0.0f, dbox.fontSize, dbox.spacing, dbox.textColor);
     // disable the dialogue box when countdown hits zero.
     *enabled = !countdown(cdown);
-    // DEBUG
-    DrawText(TextFormat("%f,%f", tboxBounds.x, tboxBounds.y), -400, 160, 20, RED);
 }
 
 void drawDialogueBoxes (DialogueBox* dboxes, const float* cdowns, size_t count) { // MIGHT have a memory leak idk
+    traceFuncWarn(__func__, "drawDialogueBoxes() must be used with caution");
     static float* cds = NULL;
     static size_t cap = 0, currentbox = 0;
     static bool* states = NULL;

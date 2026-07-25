@@ -71,4 +71,16 @@ bool inScope (int min, int max, int x) {
   return true;
 }
 
+void traceFuncInfo (const char* fn, const char* msg) {
+  TraceLog(LOG_INFO, TextFormat("At %lf: %s: %s", GetTime(), fn, msg));
+}
+
+void traceFuncErr (const char* fn, const char* msg) {
+  TraceLog(LOG_ERROR, TextFormat("At %lf: %s: %s", GetTime(), fn, msg));
+}
+
+void traceFuncWarn (const char* fn, const char* msg) {
+  TraceLog(LOG_ERROR, TextFormat("At %lf: %s: %s", GetTime(), fn, msg));
+}
+
 #endif
