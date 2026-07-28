@@ -15,5 +15,6 @@
 #include "../io/tokenize.h"
 #include "../io/dbox-parse.h"
 #include "../render/cam-oob-chk.h"
+#include "../io/resource.h"
 
 #endif

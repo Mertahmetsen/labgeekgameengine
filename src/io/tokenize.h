@@ -3,7 +3,7 @@
 #include <string.h>
 #include "raylib.h"
 
-char *loadAndTokenize(const char *path, const char *delim)
+/*char *loadAndTokenize(const char *path, const char *delim)
 {
     traceFuncWarn(__func__, "loadAndTokenize() must be used with caution");
     static char *text = NULL;
@@ -18,5 +18,5 @@ char *loadAndTokenize(const char *path, const char *delim)
     }
     return strtok_r(NULL, delim, &rest);
 }
-
+*/
 #endif

@@ -29,8 +29,11 @@ typedef enum {
   TOPLEFT, TOPRIGHT, BOTLEFT, BOTRIGHT, MID
 } WindowPos;
 
+#define DBOX_TEXT_MAX_LEN 2048
+#define FONTDIR_MAX_LEN 256
+
 typedef struct {
-  char* text;
+  char *text;
   Font font;
   float fontSize;
   float spacing;
@@ -40,6 +43,19 @@ typedef struct {
   Color textColor;
 } DialogueBox; // its actually a monologue box, but i cant be bothered
 
+typedef struct {
+  unsigned long version;
+  char text[DBOX_TEXT_MAX_LEN];
+  char fontdir[FONTDIR_MAX_LEN];
+  float fontSize;
+  float spacing;
+  WindowPos position;
+  Color color;
+  Color outline;
+  Color textColor;
+  float lifetime;
+  bool enabled;
+} DBoxFile;
 
 #define clr(r, g, b, a) (Color) {(uchar)(r), (uchar)(g), (uchar)(b), (uchar)(a)}
 #define rct(x, y, w, h) (Rectangle) {(float)(x), (float)(y), (float)(w), (float)(h)}
@@ -71,16 +87,26 @@ bool inScope (int min, int max, int x) {
   return true;
 }
 
+// #define GAME_LOGINFO
+#define GAME_LOGERR
+#define GAME_LOGWARN
+
 void traceFuncInfo (const char* fn, const char* msg) {
+  #ifdef GAME_LOGINFO
   TraceLog(LOG_INFO, TextFormat("At %lf: %s: %s", GetTime(), fn, msg));
+  #endif
 }
 
 void traceFuncErr (const char* fn, const char* msg) {
+  #ifdef GAME_LOGERR
   TraceLog(LOG_ERROR, TextFormat("At %lf: %s: %s", GetTime(), fn, msg));
+  #endif
 }
 
 void traceFuncWarn (const char* fn, const char* msg) {
+  #ifdef GAME_LOGWARN
   TraceLog(LOG_ERROR, TextFormat("At %lf: %s: %s", GetTime(), fn, msg));
+  #endif
 }
 
 #endif
