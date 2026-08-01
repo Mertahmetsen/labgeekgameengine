@@ -5,6 +5,7 @@
 #include "raygui.h"
 
 #include <stdint.h>
+#include <stdarg.h>
 
 #define uchar unsigned char
 #define LOGIC_AND &&
@@ -68,6 +69,11 @@ typedef struct TexturePointer {
   int renderSlot;
 } TexturePointer;
 
+typedef enum VerboseStatus {
+  NONE, ERR, ERRNWARN, ALL, COMPLETE
+} VerboseStatus;
+VerboseStatus g_b_verboseStatus; // FIXME : implement
+
 #define clr(r, g, b, a) (Color) {(uchar)(r), (uchar)(g), (uchar)(b), (uchar)(a)}
 #define rct(x, y, w, h) (Rectangle) {(float)(x), (float)(y), (float)(w), (float)(h)}
 #define vec(x, y) ((Vector2) {(float)(x), (float)(y)})
@@ -98,26 +104,77 @@ bool inScope (int min, int max, int x) {
   return true;
 }
 
-// #define GAME_LOGINFO
+// FIXME : Implement 
+/* #define GAME_LOGINFO */
 #define GAME_LOGERR
 #define GAME_LOGWARN
-
 void traceFuncInfo (const char* fn, const char* msg) {
   #ifdef GAME_LOGINFO
   TraceLog(LOG_INFO, TextFormat("At %lf: %s: %s", GetTime(), fn, msg));
   #endif
 }
-
 void traceFuncErr (const char* fn, const char* msg) {
   #ifdef GAME_LOGERR
   TraceLog(LOG_ERROR, TextFormat("At %lf: %s: %s", GetTime(), fn, msg));
   #endif
 }
-
 void traceFuncWarn (const char* fn, const char* msg) {
   #ifdef GAME_LOGWARN
   TraceLog(LOG_ERROR, TextFormat("At %lf: %s: %s", GetTime(), fn, msg));
   #endif
+}
+// The NEW log handler, handles logLevel at runtime
+// and supports text formatting.
+void logHandler (int logtype, const char* format, ...) {
+  char buffer[256];
+  va_list argv;
+  switch (g_b_verboseStatus) {
+    case ALL:
+      switch (logtype) {
+        case LOG_ERROR:
+        case LOG_FATAL:
+        case LOG_WARNING:
+        case LOG_INFO:
+          va_start(argv, format);
+          vsnprintf(buffer, sizeof(buffer), format, argv);
+          va_end(argv);
+        default:
+          break;
+      }
+    case ERRNWARN:
+      switch (logtype) {
+        case LOG_ERROR:
+        case LOG_FATAL:
+        case LOG_WARNING:
+          va_start(argv, format);
+          vsnprintf(buffer, sizeof(buffer), format, argv);
+          va_end(argv);
+        default:
+          break;
+      }
+      break;
+    case ERR:
+      switch (logtype) {
+        case LOG_ERROR:
+        case LOG_FATAL:
+          va_start(argv, format);
+          vsnprintf(buffer, sizeof(buffer), format, argv);
+          va_end(argv);
+        default:
+          break;
+      }
+      break;
+    case COMPLETE:
+      va_start(argv, format);
+      vsnprintf(buffer, sizeof(buffer), format, argv);
+      va_end(argv);
+    case NONE:
+    default:
+      break; // nothing to log.
+  }
+}
+void setLogVerbosity (VerboseStatus status) {
+  g_b_verboseStatus = status;
 }
 
 #endif
