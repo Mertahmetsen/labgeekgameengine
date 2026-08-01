@@ -96,10 +96,10 @@ void modifyRender (int priority, int slot, RenderOptions options) {
     g_renderList[priority][slot].options = options;
 }
 
-void modifyStates (int enabled, int enabledUser, int occupied, Render_t obj) {
-    obj.enabled = enabled;
-    obj.enabledUser = enabledUser;
-    obj.occupied = occupied;
+void modifyStates (int enabled, int enabledUser, int occupied, int priority, int slot) {
+    g_renderList[priority][slot].enabled = enabled;
+    g_renderList[priority][slot].enabledUser = enabledUser;
+    g_renderList[priority][slot].occupied = occupied;
 }
 
 void drawRenderList (void) {
