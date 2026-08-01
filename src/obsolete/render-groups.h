@@ -1,7 +1,7 @@
 #ifndef MERAHM_RENDER_GROUPS
 #define MERAHM_RENDER_GROUPS
 #include "../fundamental/globals.h"
-
+/*
 int findEmptyRenderGroup (void) {
     for (int i=0; i<RENDER_GROUPS_LIST_SIZE; ++i) {
         if (g_renderGroups[i].x == (IntVector){0}.x && g_renderGroups[i].y == (IntVector){0}.y) {
@@ -62,5 +62,5 @@ void switchRenderGroupPriority (int slot1, int slot2) {
     g_renderGroups[slot2] = tmp;
     traceFuncInfo(__func__, TextFormat("The render groups at slots %d and %d has swapped priority", slot1, slot2));
 }
-
+*/
 #endif

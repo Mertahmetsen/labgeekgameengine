@@ -4,9 +4,13 @@
 #include "raylib.h"
 #include "raygui.h"
 
-#define uchar unsigned char
+#include <stdint.h>
 
-typedef struct {
+#define uchar unsigned char
+#define LOGIC_AND &&
+#define LOGIC_OR ||
+
+typedef struct RenderOptions {
   Rectangle srcrec;
   Rectangle dstrec;
   Vector2 origin;
@@ -14,13 +18,15 @@ typedef struct {
   Color tint;
 } RenderOptions;
 
-typedef struct {
+typedef struct Render_t {
   Texture2D texture;
   RenderOptions options;
   bool enabled;
+  bool enabledUser;
+  bool occupied;
 } Render_t;
 
-typedef struct {
+typedef struct IntVector {
   int x;
   int y;
 } IntVector;
@@ -30,9 +36,9 @@ typedef enum {
 } WindowPos;
 
 #define DBOX_TEXT_MAX_LEN 2048
-#define FONTDIR_MAX_LEN 256
+#define DIR_MAX_LEN 256
 
-typedef struct {
+typedef struct DialogueBox {
   char *text;
   Font font;
   float fontSize;
@@ -43,10 +49,10 @@ typedef struct {
   Color textColor;
 } DialogueBox; // its actually a monologue box, but i cant be bothered
 
-typedef struct {
-  unsigned long version;
+typedef struct DBoxFile {
+  uint_fast16_t version;
   char text[DBOX_TEXT_MAX_LEN];
-  char fontdir[FONTDIR_MAX_LEN];
+  char fontdir[DIR_MAX_LEN];
   float fontSize;
   float spacing;
   WindowPos position;
@@ -56,6 +62,12 @@ typedef struct {
   float lifetime;
   bool enabled;
 } DBoxFile;
+
+typedef struct TexturePointer {
+  uint_fast16_t version;
+  char rayTextureDir[DIR_MAX_LEN];
+  int renderSlot;
+} TexturePointer;
 
 #define clr(r, g, b, a) (Color) {(uchar)(r), (uchar)(g), (uchar)(b), (uchar)(a)}
 #define rct(x, y, w, h) (Rectangle) {(float)(x), (float)(y), (float)(w), (float)(h)}

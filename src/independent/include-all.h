@@ -5,8 +5,8 @@
 #include "../fundamental/globals.h"
 #include "../render/cam-zoomscaling.h"
 #include "../render/mouse-cam-control.h"
-#include "../render/render-groups.h"
-#include "../render/texture.h"
+// #include "../render/render-groups.h" -> moved to obsolete
+// #include "../render/texture.h" -> moved to obsolete
 #include "../ui/cursor.h"
 #include "../ui/textbox-raygui.h"
 #include "../ui/window-pos.h"
@@ -16,5 +16,6 @@
 #include "../io/dbox-parse.h"
 #include "../render/cam-oob-chk.h"
 #include "../io/resource.h"
+#include "../render/render.h"
 
 #endif

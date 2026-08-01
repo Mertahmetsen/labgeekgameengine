@@ -3,6 +3,13 @@
 #include "basic.h"
 #include <stddef.h>
 
+// VARIABLE NAMES STARTING WITH "g_d" are BINARY-WIDE DEFAULTS.
+// SOME FUNCTIONS GET SPECIFIC PARAMETERS WHILE OTHERS USE
+// BINARY-WIDE DEFAULTS. FOR EXAMPLE: A FUNCTION THAT PRINTS A
+// TEXT CAN BOTH BE "drawText(text)" OR "drawText(font, text)"
+// IN CASE IT'S THE FORMER, THE FUNCTION WILL USE THE DEFAULT
+// FONT THAT IS SET !INSIDE! !THIS! !FILE!.
+
 Font g_dFont;
 Color g_dTbColor;
 Camera2D g_dCam;
@@ -16,17 +23,20 @@ int g_camMvTresholdY;
 float g_dt;
 float g_dRefWinWidth; // window size reference, g_dCam.zoom scales with this.
 float g_dRefWinHeight;
-#define RENDER_LIST_SIZE 2048
-Render_t g_renders[RENDER_LIST_SIZE]; // more forward-compatible
+// #define RENDER_LIST_SIZE 2048
+// Render_t g_renders[RENDER_LIST_SIZE];
 bool g_camLocked;
 Vector2 g_mousePos;
-#define RENDER_GROUPS_LIST_SIZE 32
-IntVector g_renderGroups[RENDER_GROUPS_LIST_SIZE]; // x->min, y->max
+// #define RENDER_GROUPS_LIST_SIZE 32
+// IntVector g_renderGroups[RENDER_GROUPS_LIST_SIZE]; // x->min, y->max
 bool g_useRenderGroups;
 int g_smoothingSegments;
 IntVector g_tBoxSlideLength;
 float g_tBoxRoundness;
 IntVector g_tBoxTextSlideLength;
+#define RENDERLISTSIZE 256
+#define RENDERLISTCOUNT 32
+Render_t g_renderList[RENDERLISTCOUNT][RENDERLISTSIZE];
 
 void defaultGlobals(void) {
     g_dFont = LoadFontEx("resources/fonts/font1.ttf", 48, NULL, 0);
@@ -38,21 +48,29 @@ void defaultGlobals(void) {
     g_camMvTresholdY = g_dCam.offset.y / 2;
     g_dRefWinWidth = 800.0f;
     g_dRefWinHeight = 600.0f;
-    for (int i=0; i<RENDER_LIST_SIZE; ++i) {
+    /*for (int i=0; i<RENDER_LIST_SIZE; ++i) {
         g_renders[i].texture = (Texture){0};
         g_renders[i].options = (RenderOptions){0};
         g_renders[i].enabled = false;
-    }
+    }*/
     g_camLocked = false;
     g_mousePos = GetMousePosition();
-    for (int i=0; i<RENDER_GROUPS_LIST_SIZE; ++i) {
+    /*for (int i=0; i<RENDER_GROUPS_LIST_SIZE; ++i) {
         g_renderGroups[i] = (IntVector){0};
-    }
+    }*/
     g_useRenderGroups = true;
     g_smoothingSegments = 10;
     g_tBoxSlideLength = ivec(20,20);
     g_tBoxRoundness = 0.1f;
     g_tBoxTextSlideLength = ivec(2,2);
+    for (int i=0; i<RENDERLISTCOUNT; ++i) {
+        for (int j=0; j<RENDERLISTSIZE; ++j) {
+            g_renderList[i][j].options = (RenderOptions){0};
+            g_renderList[i][j].texture = (Texture){0};
+            g_renderList[i][j].enabledUser = false;
+            g_renderList[i][j].enabled = true;
+        }
+    }
 }
 
 void preWinInitGlobals(void) {

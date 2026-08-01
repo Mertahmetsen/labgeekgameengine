@@ -5,7 +5,11 @@
 #define teq(str) TextIsEqual(argv[carg], str)
 
 #define DBOXARGC 22
-#define DBXVERSION (unsigned long)1
+#define DBXVERSION (uint_fast16_t)1
+#define TEXTUREARGC 7
+#define TXTVERSION (uint_fast16_t)1
+#define TFULLARGC
+#define TFULLVERSION (uint_fast16_t)1
 
 char *filename = "./out.resource";
 
@@ -52,6 +56,7 @@ void dboxgen (const char** argv) {
     }
     if (allset < DBOXARGC) {
         TraceLog(LOG_FATAL, "Not enough arguments");
+        return;
     }
     const char* attribs = TextFormat(
             "(%s,%f,%f,%d,(%hhu,%hhu,%hhu,%hhu),(%hhu,%hhu,%hhu,%hhu),(%hhu,%hhu,%hhu,%hhu),%f,%d)", 
@@ -66,7 +71,7 @@ void dboxgen (const char** argv) {
     } else {
         TraceLog(LOG_FATAL, TextFormat("Could not generate new dialogue box %s. Check attributes: %s", filename, attribs));
     }
-    TraceLog(LOG_INFO, TextFormat("Resource file size is %d", sizeof(DBoxFile)/8));
+    TraceLog(LOG_INFO, TextFormat("Resource file size is %d bytes (%f KBs)", sizeof(DBoxFile), (float)sizeof(DBoxFile)/1024.0f));
 }
 
 void igen (const char** argv) {
@@ -76,6 +81,34 @@ void igen (const char** argv) {
 void wgen (const char** argv) {
     TraceLog(LOG_FATAL, "Not supported yet");
 }
+
+/*void tgen (const char** argv) {
+    TexturePointer tfile;
+    int allset = 3;
+    memset(&tfile, 0, sizeof(tfile));
+    tfile.version = TXTVERSION;
+    for (int carg=3; carg<TEXTUREARGC; ++carg) {
+        if (teq("--path")) {
+            TextCopy(tfile.rayTextureDir, argv[++carg]);
+        } else if (teq("--renderSlot")) {
+            tfile.renderSlot = TextToInteger(argv[++carg]);
+        } else {
+            TraceLog(LOG_FATAL, TextFormat("Unknown Parameter: %s", argv[carg]));
+        }
+        allset+=2;
+    }
+    if (allset < TEXTUREARGC) {
+        TraceLog(LOG_FATAL, "Not enough arguments");
+        return;
+    }
+    const char* attribs = TextFormat("(%s,%d)", tfile.rayTextureDir, tfile.renderSlot);
+    if (SaveFileData(filename, &tfile, sizeof(tfile))) {
+        TraceLog(LOG_INFO, TextFormat("Generated a new texture pointer %s with desired attributes: %s", filename, attribs));
+    } else {
+        TraceLog(LOG_FATAL, TextFormat("Could not generate new texture pointer %s. Check attributes: %s", filename, attribs));
+    }
+    TraceLog(LOG_INFO, TextFormat("Resource file size is %d bytes (%f KBs)", sizeof(tfile), (float)sizeof(tfile)/1024.0f));
+}*/
 
 int main(int argc, const char** argv) {
     if (argc < 3) {
@@ -89,7 +122,10 @@ int main(int argc, const char** argv) {
         igen(argv);
     } else if (TextIsEqual(argv[2], "--world")) {
         wgen(argv);
-    } else {
+    } else if (TextIsEqual(argv[2], "--texturePointer")) {
+        tgen(argv);
+    } 
+    else {
         TraceLog(LOG_FATAL, TextFormat("Unknown resource type: %s", argv[1]));
         return 1;
     }

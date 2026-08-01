@@ -2,7 +2,6 @@
 #define MERAHM_TEXTURE
 #include "../fundamental/globals.h"
 #include "render-groups.h"
-
 /*int countUsedInRenderList (void) {
     int cntr = 0;
     for (int i=0; i<RENDER_LIST_SIZE; ++i) {
@@ -12,7 +11,7 @@
     }
     return cntr;
 }*/
-
+/*
 int findSlotInRenderList (void) {
     for (int i=0; i<RENDER_LIST_SIZE; ++i) {
         if (g_renders[i].texture.id == 0) {
@@ -94,5 +93,5 @@ void render (void) {
         }
     }
 }
-
+*/
 #endif
