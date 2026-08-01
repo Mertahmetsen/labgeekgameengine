@@ -23,7 +23,6 @@ typedef struct Render_t {
   RenderOptions options;
   bool enabled;
   bool enabledUser;
-  bool occupied;
 } Render_t;
 
 typedef struct IntVector {

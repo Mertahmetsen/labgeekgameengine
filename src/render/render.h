@@ -8,7 +8,7 @@ int reserveSlot (int priority) {
         return -1;
     }
     for (int i=0; i<RENDERLISTSIZE; ++i) {
-        if (g_renderList[priority][i].occupied == 0) {
+        if (g_renderList[priority][i].texture.id == 0) {
             traceFuncInfo(__func__, TextFormat("Found unoccupied slot %d with priority %d", i, priority));
             return i;
         }
@@ -87,7 +87,6 @@ void removeFromRender (int priority, int slot) {
 
 Render_t texture2render (Texture t) {
     return (Render_t) {
-        .occupied = true,
         .texture = t
     };
 }
@@ -96,10 +95,9 @@ void modifyRender (int priority, int slot, RenderOptions options) {
     g_renderList[priority][slot].options = options;
 }
 
-void modifyStates (int enabled, int enabledUser, int occupied, int priority, int slot) {
+void modifyStates (int enabled, int enabledUser, int priority, int slot) {
     g_renderList[priority][slot].enabled = enabled;
     g_renderList[priority][slot].enabledUser = enabledUser;
-    g_renderList[priority][slot].occupied = occupied;
 }
 
 void drawRenderList (void) {
