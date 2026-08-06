@@ -6,6 +6,10 @@
 
 #include <stdint.h>
 #include <stdarg.h>
+#include <dlfcn.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 #define uchar unsigned char
 #define LOGIC_AND &&
@@ -105,7 +109,7 @@ bool inScope (int min, int max, int x) {
 }
 
 // FIXME : Implement 
-/* #define GAME_LOGINFO */
+// #define GAME_LOGINFO
 #define GAME_LOGERR
 #define GAME_LOGWARN
 void traceFuncInfo (const char* fn, const char* msg) {
@@ -176,5 +180,20 @@ void logHandler (int logtype, const char* format, ...) {
 void setLogVerbosity (VerboseStatus status) {
   g_b_verboseStatus = status;
 }
+
+void onLoad(void);
+void onUpdate(void);
+void onUnload(void);
+typedef struct MapPlugin {
+  void (*onLoad)(void);
+  void (*onUpdate)(void);
+  void (*onUnload)(void);
+} MapPlugin;
+#if defined(__GNUC__)
+#define EXPORT __attribute__((visibility("default")))
+#else
+#define EXPORT
+#endif
+EXPORT struct MapPlugin* getPlugin(void);
 
 #endif
