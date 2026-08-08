@@ -3,6 +3,12 @@
 #include "../fundamental/globals.h"
 #include <math.h>
 
+IntVector getWindowPos (WindowPos pos);
+IntVector getWindowPosFromRect (Rectangle rect, WindowPos refpos);
+void slideWindowPos (IntVector* pos, IntVector slide, float ratio);
+IntVector slideWindowPosFromRect (Rectangle rect, WindowPos refpos, IntVector slide, float ratio);
+
+#ifdef LABGEEK_IMPLEMENTATION
 IntVector getWindowPos (WindowPos pos) {
     switch (pos) {
         case TOPRIGHT:
@@ -55,5 +61,6 @@ IntVector slideWindowPosFromRect (Rectangle rect, WindowPos refpos, IntVector sl
     slideWindowPos(&wpfr, slide, ratio);
     return wpfr;
 }
+#endif
 
 #endif

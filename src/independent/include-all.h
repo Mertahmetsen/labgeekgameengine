@@ -12,10 +12,11 @@
 #include "../ui/window-pos.h"
 #include "../fundamental/time.h"
 #include "../ui/dialoguebox.h"
-#include "../io/tokenize.h"
+// #include "../io/tokenize.h" -> moved to obsolete
 #include "../io/dbox-parse.h"
 #include "../render/cam-oob-chk.h"
 #include "../io/resource.h"
 #include "../render/render.h"
+#include "../fundamental/devtools.h"
 
 #endif

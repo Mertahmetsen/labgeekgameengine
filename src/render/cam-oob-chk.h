@@ -3,6 +3,9 @@
 #include "../fundamental/basic.h"
 #include "raymath.h"
 
+void pushCamToBounds (Camera2D* cam, Rectangle bounds);
+
+#ifdef LABGEEK_IMPLEMENTATION
 void pushCamToBounds (Camera2D* cam, Rectangle bounds) {
     float halfViewWidth = GetScreenWidth() / (2.0f * cam->zoom);
     float halfViewHeight = GetScreenHeight() / (2.0f * cam->zoom);
@@ -10,5 +13,6 @@ void pushCamToBounds (Camera2D* cam, Rectangle bounds) {
     cam->target.y = Clamp(cam->target.y, bounds.y + halfViewHeight, bounds.y + bounds.height - halfViewHeight);
     traceFuncInfo(__func__, "Pushed camera into bounds.");
 }
+#endif
 
 #endif

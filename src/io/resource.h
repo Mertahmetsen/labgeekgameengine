@@ -3,6 +3,10 @@
 #include "../fundamental/basic.h"
 #include <stddef.h>
 
+DialogueBox dbxf2dbox (DBoxFile dbxf, float* lifetime, bool* enabled);
+DialogueBox loadDBFile (const char* path, float* lifetime, bool* enabled);
+
+#ifdef LABGEEK_IMPLEMENTATION
 DialogueBox dbxf2dbox(DBoxFile dbxf, float* lifetime, bool* enabled) {
     DialogueBox dbox;
     switch (dbxf.version) {
@@ -42,5 +46,6 @@ DialogueBox loadDBFile (const char* path, float* lifetime, bool* enabled) {
     UnloadFileData(data);
     return dbxf2dbox(dbxf, lifetime, enabled);
 }
+#endif
 
 #endif

@@ -4,6 +4,10 @@
 #include "../ui/window-pos.h"
 #include "../fundamental/time.h"
 
+void drawDialogueBox (DialogueBox dbox, float* cdown, bool* enabled);
+void drawDialogueBoxes (DialogueBox* dboxes, const float* cdowns, size_t count);
+
+#ifdef LABGEEK_IMPLEMENTATION
 void drawDialogueBox (DialogueBox dbox, float* cdown, bool* enabled) {
     if (!enabled || !cdown) {
         traceFuncErr(__func__, "Invalid pointers as parameters");
@@ -76,5 +80,6 @@ void drawDialogueBoxes (DialogueBox* dboxes, const float* cdowns, size_t count) 
     if (currentbox >= count) return;
     drawDialogueBox(dboxes[currentbox], &cds[currentbox], &states[currentbox]);
 }
+#endif
 
 #endif

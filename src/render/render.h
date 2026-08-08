@@ -2,6 +2,17 @@
 #define MERAHM_RENDER_V2
 #include "../fundamental/globals.h"
 
+int reserveSlot (int priority);
+void switchSlot (int priority, int s1, int s2);
+int switchPriority (int pOld, int pNew, int slot);
+int addToRender (Render_t obj, int priority);
+void removeFromRender (int priority, int slot);
+Render_t texture2render (Texture t);
+void modifyRender (int priority, int slot, RenderOptions options);
+void modifyStates (int enabled, int enabledUser, int priority, int slot);
+void drawRenderList (void);
+
+#ifdef LABGEEK_IMPLEMENTATION
 int reserveSlot (int priority) {
     if (!inScope(0, RENDERLISTCOUNT-1, priority)) {
         traceFuncErr(__func__, TextFormat("Invalid priority: %d", priority));
@@ -121,5 +132,6 @@ void drawRenderList (void) {
         }
     }
 }
+#endif
 
 #endif

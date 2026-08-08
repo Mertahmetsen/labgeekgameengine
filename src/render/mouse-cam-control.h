@@ -2,6 +2,12 @@
 #define MERAHM_MOUSE_CAM_SMOOTH_CONTROL
 #include "../fundamental/globals.h"
 
+int decideDirectionX (void);
+int decideDirectionY (void);
+void smoothCamMovement (void);
+void lockCam (bool state);
+
+#ifdef LABGEEK_IMPLEMENTATION
 int decideDirectionX (void) { // -1 is left, 0 is stationary, 1 is right
     if (g_mousePos.x <= g_camMvTresholdX) {
         traceFuncInfo(__func__, "The player-desired horizontal movement is left.");
@@ -38,5 +44,6 @@ void lockCam (bool state) {
     g_camLocked = state;
     traceFuncInfo(__func__, TextFormat("g_camLocked has been set to %d", (int)state));
 }
+#endif
 
 #endif

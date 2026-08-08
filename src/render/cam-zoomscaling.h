@@ -2,11 +2,15 @@
 #define MERAHM_CAM_ZOOMSCALING
 #include "../fundamental/globals.h"
 
+void camZoomscale (void);
+
+#ifdef LABGEEK_IMPLEMENTATION
 void camZoomscale (void) {
     float scaleX = GetScreenWidth() / g_dRefWinWidth;
     float scaleY = GetScreenHeight() / g_dRefWinHeight;
     g_dCam.zoom = (scaleX < scaleY) ? scaleX : scaleY;
     traceFuncInfo(__func__, TextFormat("Scaled g_dCam's zoom with the resolution. g_dCam = %f", g_dCam.zoom));
 }
+#endif
 
 #endif

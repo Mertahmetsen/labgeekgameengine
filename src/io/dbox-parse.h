@@ -1,8 +1,11 @@
 #ifndef MERAHM_DBOXPARSE
 #define MERAHM_DBOXPARSE
-#include "tokenize.h"
 #include "../fundamental/basic.h"
 
+WindowPos parseWindowPos (const char* str);
+Color parseColor (const char* str);
+
+#ifdef LABGEEK_IMPLEMENTATION
 WindowPos parseWindowPos(const char* str) {
     traceFuncInfo(__func__, TextFormat("Interpreting '%s'", str));
     if (!strcmp(str, "TOPLEFT"))  return TOPLEFT;
@@ -26,6 +29,7 @@ Color parseColor(const char *str)
     traceFuncErr(__func__, "Unknown color");
     return WHITE;
 }
+#endif
 
 /*DialogueBox loadDBox (const char* path, Font f) {
     const char* delim = "\n\r,";

@@ -15,6 +15,12 @@
 #define LOGIC_AND &&
 #define LOGIC_OR ||
 
+#if defined(__GNUC__)
+#define EXPORT __attribute__((visibility("default")))
+#else
+#define EXPORT
+#endif
+
 typedef struct RenderOptions {
   Rectangle srcrec;
   Rectangle dstrec;
@@ -76,7 +82,13 @@ typedef struct TexturePointer {
 typedef enum VerboseStatus {
   NONE, ERR, ERRNWARN, ALL, COMPLETE
 } VerboseStatus;
-VerboseStatus g_b_verboseStatus; // FIXME : implement
+extern VerboseStatus g_b_verboseStatus; // FIXME : implement
+
+typedef struct MapPlugin {
+  void (*onLoad)(void);
+  void (*onUpdate)(void);
+  void (*onUnload)(void);
+} MapPlugin;
 
 #define clr(r, g, b, a) (Color) {(uchar)(r), (uchar)(g), (uchar)(b), (uchar)(a)}
 #define rct(x, y, w, h) (Rectangle) {(float)(x), (float)(y), (float)(w), (float)(h)}
@@ -84,6 +96,25 @@ VerboseStatus g_b_verboseStatus; // FIXME : implement
 #define ropt(src, dst, origin, rot, t) (RenderOptions) {src,dst,origin,rot,t}
 #define ivec(x, y) (IntVector) {(int)(x), (int)(y)}
 #define roptbasic(pos, texture, t) (RenderOptions) {rct(0,0,texture.width, texture.height),rct(pos.x, pos.y, texture.width,texture.height),vec(0,0),0.0f,t}
+
+Rectangle boundary (float x, float y, const char* text, Font font);
+Rectangle boundaryEx (float x, float y, const char* text, Font font, float fontsize, float spacing);
+void guiSetAll (Font f, int textsize, int textspacing, int borderwidth);
+bool inScope (int min, int max, int x);
+// FIXME: dont forget to implement the new log handler
+void traceFuncInfo (const char* fn, const char* msg);
+void traceFuncWarn (const char* fn, const char* msg);
+void traceFuncErr (const char* fn, const char* msg);
+void logHandler (int logtype, const char* format, ...);
+void setLogVerbosity (VerboseStatus status);
+void onLoad(void);
+void onUpdate(void);
+void onUnload(void);
+EXPORT struct MapPlugin* getPlugin(void);
+
+#ifdef LABGEEK_IMPLEMENTATION
+
+VerboseStatus g_b_verboseStatus;
 
 Rectangle boundary (float x, float y, const char* text, Font font) {
   const Vector2 size = MeasureTextEx(font, text, GuiGetStyle(DEFAULT, TEXT_SIZE), GuiGetStyle(DEFAULT, TEXT_SPACING));
@@ -109,7 +140,7 @@ bool inScope (int min, int max, int x) {
 }
 
 // FIXME : Implement 
-// #define GAME_LOGINFO
+#define GAME_LOGINFO
 #define GAME_LOGERR
 #define GAME_LOGWARN
 void traceFuncInfo (const char* fn, const char* msg) {
@@ -180,20 +211,6 @@ void logHandler (int logtype, const char* format, ...) {
 void setLogVerbosity (VerboseStatus status) {
   g_b_verboseStatus = status;
 }
-
-void onLoad(void);
-void onUpdate(void);
-void onUnload(void);
-typedef struct MapPlugin {
-  void (*onLoad)(void);
-  void (*onUpdate)(void);
-  void (*onUnload)(void);
-} MapPlugin;
-#if defined(__GNUC__)
-#define EXPORT __attribute__((visibility("default")))
-#else
-#define EXPORT
 #endif
-EXPORT struct MapPlugin* getPlugin(void);
 
 #endif
