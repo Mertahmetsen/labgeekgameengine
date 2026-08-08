@@ -1,3 +1,4 @@
+# OUTDATED README, WILL BE UPDATED LATER
 # Lab Geek Game Engine
 The GitHub repository of the engine the indie narrative job simulator and puzzle game Lab Geek uses: Lab Geek Game Engine (LGGE), developed by \_\_merahm\_\_ and ra1n. Written entirely on C11 using [Raylib](https://github.com/raysan5/raylib) and [RayGUI](https://github.com/raysan5/raygui) libraries.
 ## How to Compile using LGGE
