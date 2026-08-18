@@ -6,6 +6,9 @@
 
 #include <stdint.h>
 #include <stdarg.h>
+#include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
 
 #define uchar unsigned char
 #define LOGIC_AND &&
@@ -72,7 +75,7 @@ typedef struct TexturePointer {
 typedef enum VerboseStatus {
   NONE, ERR, ERRNWARN, ALL, COMPLETE
 } VerboseStatus;
-VerboseStatus g_b_verboseStatus; // FIXME : implement
+VerboseStatus g_b_verboseStatus = ALL; // FIXME : implement
 
 #define clr(r, g, b, a) (Color) {(uchar)(r), (uchar)(g), (uchar)(b), (uchar)(a)}
 #define rct(x, y, w, h) (Rectangle) {(float)(x), (float)(y), (float)(w), (float)(h)}
@@ -123,6 +126,9 @@ void traceFuncWarn (const char* fn, const char* msg) {
   TraceLog(LOG_ERROR, TextFormat("At %lf: %s: %s", GetTime(), fn, msg));
   #endif
 }
+#define LINFO LOG_INFO
+#define LERR LOG_ERROR
+#define LWARN LOG_WARNING
 // The NEW log handler, handles logLevel at runtime
 // and supports text formatting.
 void logHandler (int logtype, const char* format, ...) {
