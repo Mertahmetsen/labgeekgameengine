@@ -6,11 +6,11 @@
 
 void drawDialogueBox (DialogueBox dbox, float* cdown, bool* enabled) {
     if (!enabled || !cdown) {
-        TraceLog(LERR, "Invalid pointers as parameters");
+        TraceLogCaller(LERR, "Invalid pointers as parameters");
         return;
     }
     if (!(*enabled)) {
-        TraceLog(LWARN, "Dialogue box is not enabled, not drawing");
+        TraceLogCaller(LWARN, "Dialogue box is not enabled, not drawing");
         return;
     }
     // get the textbox position
@@ -43,7 +43,7 @@ void drawDialogueBox (DialogueBox dbox, float* cdown, bool* enabled) {
     // calculate where to draw the text
     IntVector textPos = ivec(tboxBounds.x + g_tBoxTextSlideLength.x, tboxBounds.y + g_tBoxTextSlideLength.y);
     // draw the bubble and the text
-    TraceLog(LINFO, "Drawing textbox");
+    TraceLogCaller(LINFO, "Drawing textbox");
     DrawRectangleRounded(tboxBounds, g_tBoxRoundness, g_smoothingSegments, dbox.color);
     DrawRectangleRoundedLines(tboxBounds, g_tBoxRoundness, g_smoothingSegments, dbox.outline);
     DrawTextPro(dbox.font, dbox.text, vec(textPos.x, textPos.y), vec(0,0), 0.0f, dbox.fontSize, dbox.spacing, dbox.textColor);
@@ -52,7 +52,7 @@ void drawDialogueBox (DialogueBox dbox, float* cdown, bool* enabled) {
 }
 
 void drawDialogueBoxes (DialogueBox* dboxes, const float* cdowns, size_t count) { // MIGHT have a memory leak idk
-    TraceLog(LWARN, "drawDialogueBoxes() must be used with caution");
+    TraceLogCaller(LWARN, "drawDialogueBoxes() must be used with caution");
     static float* cds = NULL;
     static size_t cap = 0, currentbox = 0;
     static bool* states = NULL;

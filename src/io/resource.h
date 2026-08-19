@@ -20,7 +20,7 @@ DialogueBox dbxf2dbox(DBoxFile dbxf, float* lifetime, bool* enabled) {
             *enabled = dbxf.enabled;
             return dbox;
         default:
-            TraceLog(LERR, "Unsupported version: %d, returning empty value", dbxf.version);
+            TraceLogCaller(LERR, "Unsupported version: %d, returning empty value", dbxf.version);
             return (DialogueBox){0};
     }
 }
@@ -30,11 +30,11 @@ DialogueBox loadDBFile (const char* path, float* lifetime, bool* enabled) {
     unsigned char* data = LoadFileData(path, &bytesRead);
     DBoxFile dbxf = {0};
     if (!data) {
-        TraceLog(LERR, "Couldn't load file %s, returning empty value", path);
+        TraceLogCaller(LERR, "Couldn't load file %s, returning empty value", path);
         return (DialogueBox){0};
     }
     if (bytesRead != sizeof(DBoxFile)) {
-        TraceLog(LERR, "Invalid DBFile: %s (read %d bytes, expected %zu), returning empty value", path, bytesRead, sizeof(DBoxFile));
+        TraceLogCaller(LERR, "Invalid DBFile: %s (read %d bytes, expected %zu), returning empty value", path, bytesRead, sizeof(DBoxFile));
         UnloadFileData(data);
         return (DialogueBox){0};
     }

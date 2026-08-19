@@ -27,12 +27,12 @@ void smoothCamMovement (void) {
     if (g_camLocked == true) return;
     g_dCam.target.x = g_dCam.target.x + (g_dt * g_camSpeed * decideDirectionX());
     g_dCam.target.y = g_dCam.target.y + (g_dt * g_camSpeed * decideDirectionY());
-    TraceLog(LINFO, "Moved camera towards designated target: (%f, %f)", g_dCam.target.x, g_dCam.target.y);
+    TraceLogCaller(LINFO, "Moved camera towards designated target: (%f, %f)", g_dCam.target.x, g_dCam.target.y);
 }
 
 void lockCam (bool state) {
     g_camLocked = state;
-    TraceLog(LINFO, "g_camLocked has been set to %d", (int)state);
+    TraceLogCaller(LINFO, "g_camLocked has been set to %d", (int)state);
 }
 
 #endif

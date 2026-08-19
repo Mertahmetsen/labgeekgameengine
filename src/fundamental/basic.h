@@ -156,7 +156,7 @@ void initLogHandler (VerboseStatus status) {
   g_b_verboseStatus = status;
   SetTraceLogCallback(logHandler);
 }
-void logBasic(LogPreset p) {
+void logBasicImpl(const char* caller, LogPreset p) {
   char msg[256];
   int logtype;
   switch (p) {
@@ -177,7 +177,10 @@ void logBasic(LogPreset p) {
       logtype = LERR;
       break;
   }
-  TraceLog(logtype, msg);
+  TraceLog(logtype, "[%s] %s", caller, msg);
 }
+#define TraceLogCaller(type, format, ...) \
+    TraceLog(type, "[%s] " format, __func__, ##__VA_ARGS__)
+#define logBasic(p) logBasicImpl(__func__, (p))
 
 #endif

@@ -16,7 +16,7 @@ IntVector getWindowPos (WindowPos pos) {
         case TOPLEFT:
             return ivec(0, 0);
         default:
-            TraceLog(LERR, "Unknown window position: %d", (int)pos);
+            TraceLogCaller(LERR, "Unknown window position: %d", (int)pos);
             return ivec(0, 0);
     }
 }
@@ -35,19 +35,19 @@ IntVector getWindowPosFromRect (Rectangle rect, WindowPos refpos) {
         case MID:
             return ivec(rect.x + (rect.width/2), rect.y + (rect.height/2));
         default:
-            TraceLog(LERR, "Unknown reference position: %d", (int)refpos);
+            TraceLogCaller(LERR, "Unknown reference position: %d", (int)refpos);
             return ivec(0,0);
     }
 }
 
 void slideWindowPos (IntVector* pos, IntVector slide, float ratio) {
     if (!pos) {
-        TraceLog(LERR, "Invalid pointer as parameter");
+        TraceLogCaller(LERR, "Invalid pointer as parameter");
         return;
     }
     pos->x += (int)floorf((float)(slide.x - pos->x) * ratio);
     pos->y += (int)floorf((float)(slide.y - pos->y) * ratio);
-    TraceLog(LINFO, "Slid position to (%d,%d)", pos->x, pos->y);
+    TraceLogCaller(LINFO, "Slid position to (%d,%d)", pos->x, pos->y);
 }
 
 IntVector slideWindowPosFromRect (Rectangle rect, WindowPos refpos, IntVector slide, float ratio) {

@@ -83,12 +83,12 @@ void initCam (Vector2 target, float rotation, float zoom) {
     g_dCam.target = target;
     g_dCam.zoom = zoom;
     g_dCam.rotation = rotation;
-    TraceLog(LOG_INFO, "Initialized global camera: target=(%f,%f), zoom=%d, rotation=%f", target.x, target.y, zoom, rotation);
+    TraceLogCaller(LOG_INFO, "Initialized global camera: target=(%f,%f), zoom=%d, rotation=%f", target.x, target.y, zoom, rotation);
 }
 
 void delta (void) {
     g_dt = GetFrameTime();
-    TraceLog(LOG_INFO, "A frame takes %f milliseconds", g_dt*1000.0f);
+    TraceLogCaller(LOG_INFO, "A frame takes %f milliseconds", g_dt*1000.0f);
 }
 
 #endif

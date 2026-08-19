@@ -4,13 +4,13 @@
 #include "../fundamental/basic.h"
 
 void prepTbBckgrnd(Rectangle bound, Color tbcolor) {
-    TraceLog(LINFO, "Preparing textbox background");
+    TraceLogCaller(LINFO, "Preparing textbox background");
     DrawRectangle(bound.x, bound.y, bound.width, bound.height, tbcolor);
 }
 
 int tbFull (Rectangle bound, const char* title, const char* message, const char* buttons, Color back) {
     prepTbBckgrnd(bound, back);
-    TraceLog(LINFO, "Drawing textbox");
+    TraceLogCaller(LINFO, "Drawing textbox");
     return GuiMessageBox(bound, title, message, buttons);
 }
 

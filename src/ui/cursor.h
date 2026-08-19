@@ -4,7 +4,7 @@
 
 void updateMousePos (void) {
     g_mousePos = GetMousePosition();
-    TraceLog(LINFO, "Updated mouse position: (%f,%f)", g_mousePos.x, g_mousePos.y);
+    TraceLogCaller(LINFO, "Updated mouse position: (%f,%f)", g_mousePos.x, g_mousePos.y);
 }
 
 #endif
