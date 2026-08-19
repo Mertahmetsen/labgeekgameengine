@@ -131,56 +131,44 @@ void traceFuncWarn (const char* fn, const char* msg) {
 #define LWARN LOG_WARNING
 // The NEW log handler, handles logLevel at runtime
 // and supports text formatting.
-void logHandler (int logtype, const char* format, ...) {
-  char buffer[256];
-  va_list argv;
-  switch (g_b_verboseStatus) {
-    case ALL:
-      switch (logtype) {
-        case LOG_ERROR:
-        case LOG_FATAL:
-        case LOG_WARNING:
-        case LOG_INFO:
-          va_start(argv, format);
-          vsnprintf(buffer, sizeof(buffer), format, argv);
-          va_end(argv);
+void logHandler(int logtype, const char *format, va_list args)
+{
+    char buffer[256];
+    switch (g_b_verboseStatus) {
+        case ALL:
+            if (logtype != LOG_ERROR &&
+                logtype != LOG_FATAL &&
+                logtype != LOG_WARNING &&
+                logtype != LOG_INFO)
+                return;
+            break;
+
+        case ERRNWARN:
+            if (logtype != LOG_ERROR &&
+                logtype != LOG_FATAL &&
+                logtype != LOG_WARNING)
+                return;
+            break;
+
+        case ERR:
+            if (logtype != LOG_ERROR &&
+                logtype != LOG_FATAL)
+                return;
+            break;
+
+        case COMPLETE:
+            break;
+
+        case NONE:
         default:
-          break;
-      }
-    case ERRNWARN:
-      switch (logtype) {
-        case LOG_ERROR:
-        case LOG_FATAL:
-        case LOG_WARNING:
-          va_start(argv, format);
-          vsnprintf(buffer, sizeof(buffer), format, argv);
-          va_end(argv);
-        default:
-          break;
-      }
-      break;
-    case ERR:
-      switch (logtype) {
-        case LOG_ERROR:
-        case LOG_FATAL:
-          va_start(argv, format);
-          vsnprintf(buffer, sizeof(buffer), format, argv);
-          va_end(argv);
-        default:
-          break;
-      }
-      break;
-    case COMPLETE:
-      va_start(argv, format);
-      vsnprintf(buffer, sizeof(buffer), format, argv);
-      va_end(argv);
-    case NONE:
-    default:
-      break; // nothing to log.
-  }
+            return;
+    }
+    vsnprintf(buffer, sizeof(buffer), format, args);
+    printf("%s\n", buffer);
 }
-void setLogVerbosity (VerboseStatus status) {
+void initLogHandler (VerboseStatus status) {
   g_b_verboseStatus = status;
+  SetTraceLogCallback(logHandler);
 }
 
 #endif

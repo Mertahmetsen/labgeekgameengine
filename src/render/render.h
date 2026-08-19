@@ -4,16 +4,16 @@
 
 int reserveSlot (int priority) {
     if (!inScope(0, RENDERLISTCOUNT-1, priority)) {
-        logHandler(LERR, "Invalid priority: %d", priority);
+        TraceLog(LERR, "Invalid priority: %d", priority);
         return -1;
     }
     for (int i=0; i<RENDERLISTSIZE; ++i) {
         if (g_renderList[priority][i].texture.id == 0) {
-            logHandler(LINFO, "Found unoccupied slot %d with priority %d", i, priority);
+            TraceLog(LINFO, "Found unoccupied slot %d with priority %d", i, priority);
             return i;
         }
     }
-    logHandler(LERR, "Could not find any unoccupied slots with priority %d", priority);
+    TraceLog(LERR, "Could not find any unoccupied slots with priority %d", priority);
     return -1;
 }
 
@@ -27,13 +27,13 @@ void switchSlot (int priority, int s1, int s2) {
         LOGIC_OR
         !inScope(0, RENDERLISTCOUNT-1, priority)
     ) {
-        logHandler(LERR, "Invalid parameters");
+        TraceLog(LERR, "Invalid parameters");
         return;
     }
     Render_t tmp = g_renderList[priority][s1];
     g_renderList[priority][s1] = g_renderList[priority][s2];
     g_renderList[priority][s2] = tmp;
-    logHandler(LINFO, "Switched render objects [%d][%d] and [%d][%d]", priority, s1, priority, s2);
+    TraceLog(LINFO, "Switched render objects [%d][%d] and [%d][%d]", priority, s1, priority, s2);
 }
 
 int switchPriority(int pOld, int pNew, int slot) {
@@ -46,29 +46,29 @@ int switchPriority(int pOld, int pNew, int slot) {
         LOGIC_OR
         !inScope(0, RENDERLISTSIZE-1, slot)
     ) {
-        logHandler(LERR, "Invalid parameters.");
+        TraceLog(LERR, "Invalid parameters.");
         return -1;
     }
     const int newSlot = reserveSlot(pNew);
     if (newSlot == -1) {
-        logHandler(LERR, "Could not reserve slot");
+        TraceLog(LERR, "Could not reserve slot");
         return -1;
     }
     Render_t tmp = g_renderList[pOld][slot];
     g_renderList[pOld][slot] = g_renderList[pNew][newSlot];
     g_renderList[pNew][newSlot] = tmp;
-    logHandler(LINFO, "Switched Render Objects [%d][%d] and [%d][%d]", pOld, slot, pNew, slot);
+    TraceLog(LINFO, "Switched Render Objects [%d][%d] and [%d][%d]", pOld, slot, pNew, slot);
     return newSlot;
 }
 
 int addToRender (Render_t obj, int priority) {
     const int slot = reserveSlot(priority);
     if (slot == -1) {
-        logHandler(LERR, "Could not reserve slot.");
+        TraceLog(LERR, "Could not reserve slot.");
         return -1;
     }
     g_renderList[priority][slot] = obj;
-    logHandler(LINFO, "Located given image to address [%d][%d]", priority, slot);
+    TraceLog(LINFO, "Located given image to address [%d][%d]", priority, slot);
     return slot;
 }
 
@@ -78,11 +78,11 @@ void removeFromRender (int priority, int slot) {
         LOGIC_OR
         !inScope(0, RENDERLISTSIZE-1, slot)
     ) {
-        logHandler(LERR, "Invalid parameters.");
+        TraceLog(LERR, "Invalid parameters.");
         return;
     }
     g_renderList[priority][slot] = (Render_t){0};
-    logHandler(LINFO, "Removed image [%d][%d] from render list", priority, slot);
+    TraceLog(LINFO, "Removed image [%d][%d] from render list", priority, slot);
 }
 
 Render_t texture2render (Texture t) {
