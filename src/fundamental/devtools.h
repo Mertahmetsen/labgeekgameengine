@@ -27,8 +27,8 @@ int recompileBinary (int argc, char** argv) {
     return -1;
 }
 
-void argTools (int argc, char** argv) {
-    if (argc < 2) return;
+int argTools (int argc, char** argv) {
+    if (argc < 2) return 0;
     for (int i=1; i<argc; ++i) {
         if (TextIsEqual(argv[i], "--skip-recompilation")) { // use before --recompile
             g_b_alreadyRecompiled = true;
@@ -36,7 +36,7 @@ void argTools (int argc, char** argv) {
         else if (TextIsEqual(argv[i], "--verbosity")) {
             if (argc<i+1) {
                 logBasic(E_INVPARAM);
-                return;
+                return -1;
             }
             g_b_verboseStatus = (VerboseStatus)TextToInteger(argv[++i]);
         }
@@ -45,8 +45,10 @@ void argTools (int argc, char** argv) {
             if (rbin != 0) {
                 TraceLogCaller(LERR, "Compilation failed: Compilation function returned %d", rbin);
             }
+            return rbin;
         }
     }
+    return 0;
 }
 
 #endif

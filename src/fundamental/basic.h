@@ -79,7 +79,8 @@ typedef enum VerboseStatus {
 VerboseStatus g_b_verboseStatus = ALL;
 
 typedef enum LogPreset {
-  I_SUCCESS, E_INVPARAM, E_INVPTR, E_NOMEM
+  I_SUCCESS, E_INVPARAM, E_INVPTR, E_NOMEM, E_UNSPEC,
+  E_INTERNAL
 } LogPreset;
 
 #define clr(r, g, b, a) (Color) {(uchar)(r), (uchar)(g), (uchar)(b), (uchar)(a)}
@@ -177,6 +178,14 @@ void logBasicImpl(const char* caller, LogPreset p) {
       TextCopy(msg, "Memory allocation failure.");
       logtype = LERR;
       break;
+    case E_UNSPEC:
+      TextCopy(msg, "Unspecified error.");
+      logtype = LERR;
+      break;
+    case E_INTERNAL:
+      TextCopy(msg, "Internal error.");
+      logtype = LERR;
+      break;
     default:
       TextCopy(msg, "Invalid parameter(s).");
       logtype = LERR;
@@ -192,5 +201,6 @@ const char* g_b_gccFlags = "-O3 -lraylib -lm -Wall -Wextra -Wpedantic -fopt-info
 const char* g_b_binaryName = "./bin";
 const char* g_b_mainSourcePath = "dev/src/main.c";
 bool g_b_alreadyRecompiled = false;
+const char* g_b_currentMapHeaderPath = "dev/src/map/current.h";
 
 #endif

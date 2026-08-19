@@ -18,5 +18,9 @@
 #include "../io/resource.h"
 #include "../render/render.h"
 #include "../fundamental/devtools.h"
+#include "../map/maps.h"
+//#include "../map/current.h"
+#include "../../../resources/maps/debug.lgmap"
+#include "../map/fallback.h"
 
 #endif
