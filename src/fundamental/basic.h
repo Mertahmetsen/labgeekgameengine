@@ -75,7 +75,7 @@ typedef struct TexturePointer {
 typedef enum VerboseStatus {
   NONE, ERR, ERRNWARN, ALL, COMPLETE
 } VerboseStatus;
-VerboseStatus g_b_verboseStatus = ALL; // FIXME : implement
+VerboseStatus g_b_verboseStatus = ALL;
 
 #define clr(r, g, b, a) (Color) {(uchar)(r), (uchar)(g), (uchar)(b), (uchar)(a)}
 #define rct(x, y, w, h) (Rectangle) {(float)(x), (float)(y), (float)(w), (float)(h)}
@@ -107,25 +107,6 @@ bool inScope (int min, int max, int x) {
   return true;
 }
 
-// FIXME : Implement 
-/* #define GAME_LOGINFO */
-#define GAME_LOGERR
-#define GAME_LOGWARN
-void traceFuncInfo (const char* fn, const char* msg) {
-  #ifdef GAME_LOGINFO
-  TraceLog(LOG_INFO, TextFormat("At %lf: %s: %s", GetTime(), fn, msg));
-  #endif
-}
-void traceFuncErr (const char* fn, const char* msg) {
-  #ifdef GAME_LOGERR
-  TraceLog(LOG_ERROR, TextFormat("At %lf: %s: %s", GetTime(), fn, msg));
-  #endif
-}
-void traceFuncWarn (const char* fn, const char* msg) {
-  #ifdef GAME_LOGWARN
-  TraceLog(LOG_ERROR, TextFormat("At %lf: %s: %s", GetTime(), fn, msg));
-  #endif
-}
 #define LINFO LOG_INFO
 #define LERR LOG_ERROR
 #define LWARN LOG_WARNING
