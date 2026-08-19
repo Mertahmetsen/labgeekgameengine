@@ -17,5 +17,6 @@
 #include "../render/cam-oob-chk.h"
 #include "../io/resource.h"
 #include "../render/render.h"
+#include "../fundamental/devtools.h"
 
 #endif

@@ -9,6 +9,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
+#include <unistd.h>
 
 #define uchar unsigned char
 #define LOGIC_AND &&
@@ -78,7 +79,7 @@ typedef enum VerboseStatus {
 VerboseStatus g_b_verboseStatus = ALL;
 
 typedef enum LogPreset {
-  I_SUCCESS, E_INVPARAM, E_INVPTR
+  I_SUCCESS, E_INVPARAM, E_INVPTR, E_NOMEM
 } LogPreset;
 
 #define clr(r, g, b, a) (Color) {(uchar)(r), (uchar)(g), (uchar)(b), (uchar)(a)}
@@ -172,6 +173,10 @@ void logBasicImpl(const char* caller, LogPreset p) {
       TextCopy(msg, "Invalid pointer(s).");
       logtype = LERR;
       break;
+    case E_NOMEM:
+      TextCopy(msg, "Memory allocation failure.");
+      logtype = LERR;
+      break;
     default:
       TextCopy(msg, "Invalid parameter(s).");
       logtype = LERR;
@@ -182,5 +187,10 @@ void logBasicImpl(const char* caller, LogPreset p) {
 #define TraceLogCaller(type, format, ...) \
     TraceLog(type, "[%s] " format, __func__, ##__VA_ARGS__)
 #define logBasic(p) logBasicImpl(__func__, (p))
+
+const char* g_b_gccFlags = "-O3 -lraylib -lm -Wall -Wextra -Wpedantic -fopt-info -ftime-report";
+const char* g_b_binaryName = "./bin";
+const char* g_b_mainSourcePath = "dev/src/main.c";
+bool g_b_alreadyRecompiled = false;
 
 #endif
