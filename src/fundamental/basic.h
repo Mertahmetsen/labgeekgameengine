@@ -77,6 +77,10 @@ typedef enum VerboseStatus {
 } VerboseStatus;
 VerboseStatus g_b_verboseStatus = ALL;
 
+typedef enum LogPreset {
+  I_SUCCESS, E_INVPARAM, E_INVPTR
+} LogPreset;
+
 #define clr(r, g, b, a) (Color) {(uchar)(r), (uchar)(g), (uchar)(b), (uchar)(a)}
 #define rct(x, y, w, h) (Rectangle) {(float)(x), (float)(y), (float)(w), (float)(h)}
 #define vec(x, y) ((Vector2) {(float)(x), (float)(y)})
@@ -107,6 +111,7 @@ bool inScope (int min, int max, int x) {
   return true;
 }
 
+#define MAX_LOG_LEN 256
 #define LINFO LOG_INFO
 #define LERR LOG_ERROR
 #define LWARN LOG_WARNING
@@ -114,7 +119,7 @@ bool inScope (int min, int max, int x) {
 // and supports text formatting.
 void logHandler(int logtype, const char *format, va_list args)
 {
-    char buffer[256];
+    char buffer[MAX_LOG_LEN];
     switch (g_b_verboseStatus) {
         case ALL:
             if (logtype != LOG_ERROR &&
@@ -150,6 +155,29 @@ void logHandler(int logtype, const char *format, va_list args)
 void initLogHandler (VerboseStatus status) {
   g_b_verboseStatus = status;
   SetTraceLogCallback(logHandler);
+}
+void logBasic(LogPreset p) {
+  char msg[256];
+  int logtype;
+  switch (p) {
+    case I_SUCCESS:
+      TextCopy(msg, "The function finished without errors.");
+      logtype = LINFO;
+      break;
+    case E_INVPARAM:
+      TextCopy(msg, "Invalid parameter(s).");
+      logtype = LERR;
+      break;
+    case E_INVPTR:
+      TextCopy(msg, "Invalid pointer(s).");
+      logtype = LERR;
+      break;
+    default:
+      TextCopy(msg, "Invalid parameter(s).");
+      logtype = LERR;
+      break;
+  }
+  TraceLog(logtype, msg);
 }
 
 #endif
