@@ -19,8 +19,7 @@
 #include "../render/render.h"
 #include "../fundamental/devtools.h"
 #include "../map/maps.h"
-//#include "../map/current.h"
-#include "../../../resources/maps/debug.lgmap"
+#include "../map/current.h"
 #include "../map/fallback.h"
 
 #endif
