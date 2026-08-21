@@ -100,6 +100,14 @@ void modifyStates (int enabled, int enabledUser, int priority, int slot) {
     g_renderList[priority][slot].enabledUser = enabledUser;
 }
 
+int rInit (Render_t* r, bool e, bool eu, Texture t, RenderOptions o, int p) {
+    r->enabled = e;
+    r->enabledUser = eu;
+    r->options = o;
+    r->texture = t;
+    return addToRender(*r, p);
+}
+
 void drawRenderList (void) {
     for (int i=RENDERLISTCOUNT-1; i>=0; --i) {
         for (int j=RENDERLISTSIZE-1; j>=0; --j) {

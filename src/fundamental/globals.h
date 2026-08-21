@@ -34,7 +34,7 @@ int g_smoothingSegments;
 IntVector g_tBoxSlideLength;
 float g_tBoxRoundness;
 IntVector g_tBoxTextSlideLength;
-#define RENDERLISTSIZE 256
+#define RENDERLISTSIZE 2048
 #define RENDERLISTCOUNT 32
 Render_t g_renderList[RENDERLISTCOUNT][RENDERLISTSIZE];
 

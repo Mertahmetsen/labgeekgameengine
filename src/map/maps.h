@@ -16,4 +16,11 @@ int loadMap (const char* mapHeaderPath, int argc, char** argv) {
     return recompileBinary(argc, argv);
 }
 
+void mapLoadingScreen (void) {
+    BeginDrawing();
+    ClearBackground(WHITE);
+    DrawText("Loading map...", g_windowW/2, g_windowH/2 ,20, BLACK);
+    EndDrawing();
+}
+
 #endif

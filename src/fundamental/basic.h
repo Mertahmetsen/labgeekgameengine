@@ -197,7 +197,7 @@ void logBasicImpl(const char* caller, LogPreset p) {
     TraceLog(type, "[%s] " format, __func__, ##__VA_ARGS__)
 #define logBasic(p) logBasicImpl(__func__, (p))
 
-const char* g_b_gccFlags = "-O3 -lraylib -lm -Wall -Wextra -Wpedantic -fopt-info -ftime-report";
+const char* g_b_gccFlags = "-O3 -lraylib -lm -Wall -Wextra -Wpedantic -fopt-info -ftime-report -g";
 const char* g_b_binaryName = "./bin";
 const char* g_b_mainSourcePath = "dev/src/main.c";
 bool g_b_alreadyRecompiled = false;
