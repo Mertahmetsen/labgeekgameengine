@@ -24,7 +24,7 @@ int decideDirectionY(void)
 }
 
 void smoothCamMovement (void) {
-    if (g_camLocked == true) return;
+    if (g_camLocked == true || g_mousePos.x == 0.0f || g_mousePos.y == 0.0f) return;
     g_dCam.target.x = g_dCam.target.x + (g_dt * g_camSpeed * decideDirectionX());
     g_dCam.target.y = g_dCam.target.y + (g_dt * g_camSpeed * decideDirectionY());
     TraceLogCaller(LINFO, "Moved camera towards designated target: (%f, %f)", g_dCam.target.x, g_dCam.target.y);
