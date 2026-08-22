@@ -108,6 +108,31 @@ int rInit (Render_t* r, bool e, bool eu, Texture t, RenderOptions o, int p) {
     return addToRender(*r, p);
 }
 
+int rPInitBasic (Render_t* r, bool e, bool eu, const char* tPath, int p, Vector2 pos, Color tint) {
+    Texture t = LoadTexture(tPath);
+    if (t.id == 0) {
+        logBasic(E_INTERNAL);
+        return -1;
+    }
+    return rInit(r, e, eu, t, roptbasic(pos, t, tint), p);
+}
+
+int rInInitBasic (bool e, bool eu, Texture t, int p, Vector2 pos, Color tint) { // r defined inside
+    Render_t r;
+    return rInit(&r, e, eu, t, roptbasic(pos, t, tint), p);
+}
+
+int rInPInitBasic (bool e, bool eu, const char* tPath, int p, Vector2 pos, Color tint) {
+    Texture t = LoadTexture(tPath);
+    if (t.id == 0) {
+        logBasic(E_INTERNAL);
+        return -1;
+    }
+    return rInInitBasic(e, eu, t, p, pos, tint);
+}
+
+#define rUnInit(s, p) UnloadTexture(g_renderList[p][s].texture)
+
 void drawRenderList (void) {
     for (int i=RENDERLISTCOUNT-1; i>=0; --i) {
         for (int j=RENDERLISTSIZE-1; j>=0; --j) {
