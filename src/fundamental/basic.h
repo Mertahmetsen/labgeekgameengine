@@ -83,6 +83,13 @@ typedef enum LogPreset {
   E_INTERNAL
 } LogPreset;
 
+typedef struct {
+  const char* name;
+  void (*onLoad)(void);
+  void (*onUpdate)(void);
+  void (*onFinish)(void);
+} Scene;
+
 #define clr(r, g, b, a) (Color) {(uchar)(r), (uchar)(g), (uchar)(b), (uchar)(a)}
 #define rct(x, y, w, h) (Rectangle) {(float)(x), (float)(y), (float)(w), (float)(h)}
 #define vec(x, y) ((Vector2) {(float)(x), (float)(y)})
