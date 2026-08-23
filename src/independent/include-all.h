@@ -1,6 +1,8 @@
 #ifndef MERAHM_ALL_INCLUDE
 #define MERAHM_ALL_INCLUDE
 
+// THE INCLUDE ORDER MATTERS!
+
 #include "../fundamental/basic.h"
 #include "../fundamental/globals.h"
 #include "../render/cam-zoomscaling.h"
@@ -20,6 +22,6 @@
 #include "../fundamental/devtools.h"
 #include "../map/maps.h"
 #include "../map/current.h"
-#include "../map/fallback.h"
+#include "../render/eyecandy.h"
 
 #endif

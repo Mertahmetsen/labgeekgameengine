@@ -1,0 +1,4 @@
+#ifndef MERAHM_EYECANDY
+#define MERAHM_EYECANDY
+
+#endif

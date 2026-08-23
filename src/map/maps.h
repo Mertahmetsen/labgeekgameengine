@@ -9,6 +9,15 @@ bool reshapeIncludesForMap (const char* mapHeaderPath) {
 }
 
 int loadMap (const char* mapHeaderPath, int argc, char** argv) {
+    if (!FileExists(mapHeaderPath)) {
+        TraceLogCaller(LERR, "Map \"%s\" does not exist, loading fallback map.", mapHeaderPath);
+        const char* text = "#ifndef LGEEK_CMAP\n#define LGEEK_CMAP\n#include \"fallback.h\"\n#endif\n";
+        if (!SaveFileText(g_b_currentMapHeaderPath, text)) {
+            logBasic(E_UNSPEC);
+            return -1;
+        }
+        return recompileBinary(argc, argv);
+    }
     if (!reshapeIncludesForMap(mapHeaderPath)) {
         logBasic(E_UNSPEC);
         return -1;
