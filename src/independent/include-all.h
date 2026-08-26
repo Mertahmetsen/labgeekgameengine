@@ -21,6 +21,8 @@
 #include "../render/render.h"
 #include "../fundamental/devtools.h"
 #include "../ui/eyecandy.h"
+#include "../ui/debuguis.h"
+#include "../render/culling.h"
 #include "../../../resources/scenes/debug.h"
 
 #endif

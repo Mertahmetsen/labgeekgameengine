@@ -52,4 +52,8 @@ void fadeColor(ColorF* c, Color t, float seconds) {
     fade(&c->a, (float)t.a, seconds);
 }
 
+void kaleidoscope(ColorF* c, float seconds) {
+    fadeColor(c, clr(GetRandomValue(0, 255), GetRandomValue(0, 255), GetRandomValue(0, 255), 255), seconds);
+}
+
 #endif

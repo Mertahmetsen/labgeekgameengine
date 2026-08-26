@@ -34,9 +34,10 @@ int g_smoothingSegments;
 IntVector g_tBoxSlideLength;
 float g_tBoxRoundness;
 IntVector g_tBoxTextSlideLength;
-#define RENDERLISTSIZE 2048
+#define RENDERLISTSIZE 4096
 #define RENDERLISTCOUNT 32
 Render_t g_renderList[RENDERLISTCOUNT][RENDERLISTSIZE];
+Rectangle g_dCamAABB;
 
 void defaultGlobals(void) {
     g_dFont = LoadFontEx("resources/fonts/font1.ttf", 48, NULL, 0);
@@ -75,8 +76,8 @@ void defaultGlobals(void) {
 
 void preWinInitGlobals(void) {
     g_windowTitle = "Lab Geek";
-    g_windowW = 1024;
-    g_windowH = 768;
+    g_windowW = 1920;
+    g_windowH = 1080;
 }
 
 void initCam (Vector2 target, float rotation, float zoom) {

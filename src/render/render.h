@@ -1,6 +1,7 @@
 #ifndef MERAHM_RENDER_V2
 #define MERAHM_RENDER_V2
 #include "../fundamental/globals.h"
+#include "culling.h"
 
 int reserveSlot (int priority) {
     if (!inScope(0, RENDERLISTCOUNT-1, priority)) {
@@ -134,6 +135,7 @@ int rInPInitBasic (bool e, bool eu, const char* tPath, int p, Vector2 pos, Color
 #define rUnInit(s, p) UnloadTexture(g_renderList[p][s].texture)
 
 void drawRenderList (void) {
+    g_dCamAABB = GetCameraWorldAABB(g_dCam);
     for (int i=RENDERLISTCOUNT-1; i>=0; --i) {
         for (int j=RENDERLISTSIZE-1; j>=0; --j) {
             if (
@@ -142,6 +144,8 @@ void drawRenderList (void) {
                 !g_renderList[i][j].enabled
                 LOGIC_OR
                 !g_renderList[i][j].enabledUser
+                LOGIC_OR
+                !IsRenderableVisibleFast(g_dCamAABB, &g_renderList[i][j])
             ) {continue;}
             DrawTexturePro(
                 g_renderList[i][j].texture,
