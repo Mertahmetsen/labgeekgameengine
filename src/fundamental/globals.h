@@ -28,12 +28,12 @@ float g_dRefWinHeight;
 bool g_camLocked;
 Vector2 g_mousePos;
 // #define RENDER_GROUPS_LIST_SIZE 32
-// IntVector g_renderGroups[RENDER_GROUPS_LIST_SIZE]; // x->min, y->max
+// IntVector2 g_renderGroups[RENDER_GROUPS_LIST_SIZE]; // x->min, y->max
 bool g_useRenderGroups;
 int g_smoothingSegments;
-IntVector g_tBoxSlideLength;
+IntVector2 g_tBoxSlideLength;
 float g_tBoxRoundness;
-IntVector g_tBoxTextSlideLength;
+IntVector2 g_tBoxTextSlideLength;
 #define RENDERLISTSIZE 4096
 #define RENDERLISTCOUNT 32
 Render_t g_renderList[RENDERLISTCOUNT][RENDERLISTSIZE];
@@ -57,7 +57,7 @@ void defaultGlobals(void) {
     g_camLocked = false;
     g_mousePos = GetMousePosition();
     /*for (int i=0; i<RENDER_GROUPS_LIST_SIZE; ++i) {
-        g_renderGroups[i] = (IntVector){0};
+        g_renderGroups[i] = (IntVector2){0};
     }*/
     g_useRenderGroups = true;
     g_smoothingSegments = 10;

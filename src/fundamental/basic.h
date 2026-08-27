@@ -30,10 +30,10 @@ typedef struct Render_t {
   bool enabledUser;
 } Render_t;
 
-typedef struct IntVector {
+typedef struct IntVector2 {
   int x;
   int y;
-} IntVector;
+} IntVector2;
 
 typedef enum {
   TOPLEFT, TOPRIGHT, BOTLEFT, BOTRIGHT, MID
@@ -94,11 +94,20 @@ typedef struct {
   float r, g, b, a;
 } ColorF;
 
+typedef struct Animation {
+  IntVector2 renderSlotAddress;
+  Render_t* frames;
+  int totalFrames;
+  int currentFrame;
+  float frameDuration;
+  float timer;
+} Animation;
+
 #define clr(r, g, b, a) (Color) {(uchar)(r), (uchar)(g), (uchar)(b), (uchar)(a)}
 #define rct(x, y, w, h) (Rectangle) {(float)(x), (float)(y), (float)(w), (float)(h)}
 #define vec(x, y) ((Vector2) {(float)(x), (float)(y)})
 #define ropt(src, dst, origin, rot, t) (RenderOptions) {src,dst,origin,rot,t}
-#define ivec(x, y) (IntVector) {(int)(x), (int)(y)}
+#define ivec(x, y) (IntVector2) {(int)(x), (int)(y)}
 #define roptbasic(pos, texture, t) (RenderOptions) {rct(0,0,texture.width, texture.height),rct(pos.x, pos.y, texture.width,texture.height),vec(0,0),0.0f,t}
 
 Rectangle boundary (float x, float y, const char* text, Font font) {
@@ -208,11 +217,11 @@ void logBasicImpl(const char* caller, LogPreset p) {
     TraceLog(type, "[%s] " format, __func__, ##__VA_ARGS__)
 #define logBasic(p) logBasicImpl(__func__, (p))
 
-Vector2 ivec2vec (IntVector iv) {
+Vector2 ivec2vec (IntVector2 iv) {
   return (Vector2) {(float)iv.x, (float)iv.y};
 }
-IntVector vec2ivec (Vector2 v) {
-  return (IntVector) {(int)truncf(v.x), (int)truncf(v.y)};
+IntVector2 vec2ivec (Vector2 v) {
+  return (IntVector2) {(int)truncf(v.x), (int)truncf(v.y)};
 }
 
 const char* g_b_gccFlags = "-O3 -lraylib -lm -Wall -Wextra -Wpedantic -fopt-info -ftime-report -g";

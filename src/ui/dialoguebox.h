@@ -14,7 +14,7 @@ void drawDialogueBox (DialogueBox dbox, float* cdown, bool* enabled) {
         return;
     }
     // get the textbox position
-    IntVector tboxPos = getWindowPos(dbox.position);
+    IntVector2 tboxPos = getWindowPos(dbox.position);
     // get the boundary
     Rectangle tboxBounds = boundaryEx(tboxPos.x, tboxPos.y, dbox.text, dbox.font, dbox.fontSize, dbox.spacing);
     // slide the textbox to the center and prevent out-of-bounds rendering (idk what im doing)
@@ -41,7 +41,7 @@ void drawDialogueBox (DialogueBox dbox, float* cdown, bool* enabled) {
     tboxBounds.x = tboxPos.x;
     tboxBounds.y = tboxPos.y;
     // calculate where to draw the text
-    IntVector textPos = ivec(tboxBounds.x + g_tBoxTextSlideLength.x, tboxBounds.y + g_tBoxTextSlideLength.y);
+    IntVector2 textPos = ivec(tboxBounds.x + g_tBoxTextSlideLength.x, tboxBounds.y + g_tBoxTextSlideLength.y);
     // draw the bubble and the text
     TraceLogCaller(LINFO, "Drawing textbox");
     DrawRectangleRounded(tboxBounds, g_tBoxRoundness, g_smoothingSegments, dbox.color);

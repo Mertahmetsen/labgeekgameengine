@@ -3,7 +3,7 @@
 #include "../fundamental/globals.h"
 #include <math.h>
 
-IntVector getWindowPos (WindowPos pos) {
+IntVector2 getWindowPos (WindowPos pos) {
     switch (pos) {
         case TOPRIGHT:
             return ivec(g_windowW, 0);
@@ -22,7 +22,7 @@ IntVector getWindowPos (WindowPos pos) {
 }
 
 // the reference becomes the rectangle rather than the entire window
-IntVector getWindowPosFromRect (Rectangle rect, WindowPos refpos) {
+IntVector2 getWindowPosFromRect (Rectangle rect, WindowPos refpos) {
     switch (refpos) {
         case TOPLEFT:
             return ivec(rect.x, rect.y);
@@ -40,7 +40,7 @@ IntVector getWindowPosFromRect (Rectangle rect, WindowPos refpos) {
     }
 }
 
-void slideWindowPos (IntVector* pos, IntVector slide, float ratio) {
+void slideWindowPos (IntVector2* pos, IntVector2 slide, float ratio) {
     if (!pos) {
         TraceLogCaller(LERR, "Invalid pointer as parameter");
         return;
@@ -50,8 +50,8 @@ void slideWindowPos (IntVector* pos, IntVector slide, float ratio) {
     TraceLogCaller(LINFO, "Slid position to (%d,%d)", pos->x, pos->y);
 }
 
-IntVector slideWindowPosFromRect (Rectangle rect, WindowPos refpos, IntVector slide, float ratio) {
-    IntVector wpfr = getWindowPosFromRect(rect, refpos);
+IntVector2 slideWindowPosFromRect (Rectangle rect, WindowPos refpos, IntVector2 slide, float ratio) {
+    IntVector2 wpfr = getWindowPosFromRect(rect, refpos);
     slideWindowPos(&wpfr, slide, ratio);
     return wpfr;
 }

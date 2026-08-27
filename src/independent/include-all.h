@@ -23,6 +23,7 @@
 #include "../ui/eyecandy.h"
 #include "../ui/debuguis.h"
 #include "../render/culling.h"
+#include "../render/animated.h"
 #include "../../../resources/scenes/debug.h"
 
 #endif
