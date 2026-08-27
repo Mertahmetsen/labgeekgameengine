@@ -2,7 +2,7 @@
 #define MERAHM_DEVTOOLS
 #include "basic.h"
 
-int recompileBinary (int argc, char** argv) {
+/*int recompileBinary (int argc, char** argv) {
     if (g_b_alreadyRecompiled) return 0;
     int result = system(TextFormat("gcc %s -o %s %s", g_b_mainSourcePath, g_b_binaryName, g_b_gccFlags));
     if (result != 0) {
@@ -25,30 +25,30 @@ int recompileBinary (int argc, char** argv) {
     TraceLogCaller(LERR, "Internal error: execv failed.");
     free(newArgv);
     return -1;
-}
+}*/
 
-int argTools (int argc, char** argv) {
-    if (argc < 2) return 0;
+void argTools (int argc, char** argv) {
+    if (argc < 2) return;
     for (int i=1; i<argc; ++i) {
-        if (TextIsEqual(argv[i], "--skip-recompilation")) { // use before --recompile
+        /*if (TextIsEqual(argv[i], "--skip-recompilation")) { // use before --recompile
             g_b_alreadyRecompiled = true;
         }
-        else if (TextIsEqual(argv[i], "--verbosity")) {
+        else*/
+        if (TextIsEqual(argv[i], "--verbosity")) {
             if (argc<i+1) {
                 logBasic(E_INVPARAM);
-                return -1;
+                continue;
             }
             g_b_verboseStatus = (VerboseStatus)TextToInteger(argv[++i]);
         }
-        else if (TextIsEqual(argv[i], "--recompile")) {
+        /*else if (TextIsEqual(argv[i], "--recompile")) {
             const int rbin = recompileBinary(argc, argv);
             if (rbin != 0) {
                 TraceLogCaller(LERR, "Compilation failed: Compilation function returned %d", rbin);
             }
             return rbin;
-        }
+        }*/
     }
-    return 0;
 }
 
 #endif

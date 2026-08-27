@@ -3,13 +3,18 @@
 #include "../fundamental/globals.h"
 
 bool animAlloc (Animation* a) {
-    a->frames = malloc(sizeof(Animation) * a->totalFrames);
+    a->frames = malloc(sizeof(*a->frames) * a->totalFrames);
     if (!a->frames) return false;
     return true;
 }
 
 void animFree (Animation* a) {
+    if (!a || !a->frames) return;
+    for (int i = 0; i < a->totalFrames; i++) {
+        UnloadTexture(a->frames[i].texture);
+    }
     free(a->frames);
+    a->frames = NULL;
 }
 
 void updateAnimation (Animation* a) {
