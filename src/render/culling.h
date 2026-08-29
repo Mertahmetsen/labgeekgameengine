@@ -1,6 +1,7 @@
 #ifndef MERAHM_CULLING
 #define MERAHM_CULLING
 #include "../fundamental/basic.h"
+#include "../fundamental/globals.h"
 #include "raymath.h"
 
 Rectangle GetCameraWorldAABB(Camera2D camera) {
