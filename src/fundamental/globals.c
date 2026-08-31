@@ -1,0 +1,84 @@
+#include "globals.h"
+
+Font g_dFont;
+Color g_dTbColor;
+Camera2D g_dCam;
+int g_targetFPS;
+int g_windowW; 
+int g_windowH;
+char* g_windowTitle;
+int g_camSpeed;
+int g_camMvTresholdX;
+int g_camMvTresholdY;
+float g_dt;
+float g_dRefWinWidth; // window size reference, g_dCam.zoom scales with this.
+float g_dRefWinHeight;
+// #define RENDER_LIST_SIZE 2048
+// Render_t g_renders[RENDER_LIST_SIZE];
+bool g_camLocked;
+Vector2 g_mousePos;
+// #define RENDER_GROUPS_LIST_SIZE 32
+// IntVector2 g_renderGroups[RENDER_GROUPS_LIST_SIZE]; // x->min, y->max
+bool g_useRenderGroups;
+int g_smoothingSegments;
+IntVector2 g_tBoxSlideLength;
+float g_tBoxRoundness;
+IntVector2 g_tBoxTextSlideLength;
+Render_t g_renderList[RENDERLISTCOUNT][RENDERLISTSIZE];
+Rectangle g_dCamAABB;
+
+void preWinInitGlobals(void)
+{
+    g_windowTitle = "Lab Geek";
+    g_windowW = 1920;
+    g_windowH = 1080;
+}
+
+void initCam (Vector2 target, float rotation, float zoom)
+{
+    g_dCam.target = target;
+    g_dCam.zoom = zoom;
+    g_dCam.rotation = rotation;
+    TraceLogCaller(LOG_INFO, "Initialized global camera: target=(%f,%f), zoom=%d, rotation=%f", target.x, target.y, zoom, rotation);
+}
+
+void delta (void)
+{
+    g_dt = GetFrameTime();
+    TraceLogCaller(LOG_INFO, "A frame takes %f milliseconds", g_dt*1000.0f);
+}
+
+void defaultGlobals(void) {
+    g_dFont = LoadFontEx("resources/fonts/font1.ttf", 48, NULL, 0);
+    g_dTbColor = WHITE;
+    g_dCam.offset = vec(GetScreenWidth()/2.0f, GetScreenHeight()/2.0f);
+    g_targetFPS = 60;
+    g_camSpeed = 250;
+    g_camMvTresholdX = g_dCam.offset.x / 2;
+    g_camMvTresholdY = g_dCam.offset.y / 2;
+    g_dRefWinWidth = 800.0f;
+    g_dRefWinHeight = 600.0f;
+    /*for (int i=0; i<RENDER_LIST_SIZE; ++i) {
+        g_renders[i].texture = (Texture){0};
+        g_renders[i].options = (RenderOptions){0};
+        g_renders[i].enabled = false;
+    }*/
+    g_camLocked = false;
+    g_mousePos = GetMousePosition();
+    /*for (int i=0; i<RENDER_GROUPS_LIST_SIZE; ++i) {
+        g_renderGroups[i] = (IntVector2){0};
+    }*/
+    g_useRenderGroups = true;
+    g_smoothingSegments = 10;
+    g_tBoxSlideLength = ivec(20,20);
+    g_tBoxRoundness = 0.1f;
+    g_tBoxTextSlideLength = ivec(2,2);
+    for (int i=0; i<RENDERLISTCOUNT; ++i) {
+        for (int j=0; j<RENDERLISTSIZE; ++j) {
+            g_renderList[i][j].options = (RenderOptions){0};
+            g_renderList[i][j].texture = (Texture){0};
+            g_renderList[i][j].enabledUser = false;
+            g_renderList[i][j].enabled = true;
+        }
+    }
+}

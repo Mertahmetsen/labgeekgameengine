@@ -24,6 +24,7 @@
 #include "../ui/debuguis.h"
 #include "../render/culling.h"
 #include "../render/animated.h"
+#ifdef LGGE_MAIN_EXEC
 #include "../../../resources/scenes/debug.h"
-
+#endif
 #endif
