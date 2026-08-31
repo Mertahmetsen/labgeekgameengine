@@ -2,13 +2,8 @@
 #define MERAHM_TIME
 #include "raylib.h"
 
-void stopwatch (float* swatch) {
-    *swatch += GetFrameTime();
-}
+void stopwatch (float* swatch);
 
-bool countdown (float* cdown) {
-    *cdown -= GetFrameTime();
-    return (bool)(*cdown <= 0.0f);
-}
+bool countdown (float* cdown);
 
 #endif
