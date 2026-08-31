@@ -4,3 +4,4 @@ gitlog.sh
 logs/gcclog.log
 logs/gitlog.log
 logs
+bin

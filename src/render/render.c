@@ -143,10 +143,7 @@ int rInPInitBasic (bool e, bool eu, const char* tPath, int p, Vector2 pos, Color
 
 void drawRenderList(void)
 {
-    TraceLogCaller(LOG_ERROR, "Called.");
-
     g_dCamAABB = GetCameraWorldAABB(g_dCam);
-
     for (int i = RENDERLISTCOUNT - 1; i >= 0; --i) {
         for (int j = RENDERLISTSIZE - 1; j >= 0; --j) {
 
@@ -160,18 +157,6 @@ void drawRenderList(void)
             ) {
                 continue;
             }
-
-            TraceLogCaller(
-                LOG_ERROR,
-                "%d,%d,%d,%d,%d,%d",
-                r->texture.id,
-                r->enabled,
-                r->enabledUser,
-                i,
-                j,
-                IsRenderableVisibleFast(g_dCamAABB, r)
-            );
-
             DrawTexturePro(
                 r->texture,
                 r->options.srcrec,
