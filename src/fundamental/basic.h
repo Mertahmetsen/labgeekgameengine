@@ -9,6 +9,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
+#include <math.h>
 
 #define uchar unsigned char
 #define LOGIC_AND &&
@@ -138,8 +139,7 @@ bool inScope (int min, int max, int x) {
 #define LWARN LOG_WARNING
 // The NEW log handler, handles logLevel at runtime
 // and supports text formatting.
-void logHandler(int logtype, const char *format, va_list args)
-{
+void logHandler(int logtype, const char *format, va_list args) {
     char buffer[MAX_LOG_LEN];
     switch (g_b_verboseStatus) {
         case ALL:
