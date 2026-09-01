@@ -1,0 +1,9 @@
+src/main.c
+src/compile.sh
+src/gitlog.sh
+src/logs/gcclog.log
+src/logs/gitlog.log
+src/logs
+src/bin
+*.a
+*.so

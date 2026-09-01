@@ -1,9 +1,1 @@
-main.c
-compile.sh
-gitlog.sh
-logs/gcclog.log
-logs/gitlog.log
-logs
-bin
-*.a
 *.so
