@@ -1,12 +1,14 @@
 #ifndef MERAHM_BASIC
 #define MERAHM_BASIC
 
-#include "raylib.h"
-#include "raygui.h"
+#include <raylib.h>
+#include <raygui.h>
 
 #include <stdint.h>
 #include <stdarg.h>
 #include <stdlib.h>
+#include <stddef.h>
+#include <stdbool.h>
 #include <string.h>
 #include <stdio.h>
 #include <math.h>
@@ -110,6 +112,13 @@ typedef struct Animation {
 #define ivec(x, y) (IntVector2) {(int)(x), (int)(y)}
 #define roptbasic(pos, texture, t) (RenderOptions) {rct(0,0,texture.width, texture.height),rct(pos.x, pos.y, texture.width,texture.height),vec(0,0),0.0f,t}
 
+#define ANSI_COLOR_RESET   "\x1b[0m"
+#define ANSI_COLOR_RED     "\x1b[31m"
+#define ANSI_COLOR_GREEN   "\x1b[32m"
+#define ANSI_COLOR_YELLOW  "\x1b[33m"
+#define ANSI_COLOR_BLUE    "\x1b[34m"
+#define ANSI_COLOR_CYAN    "\x1b[36m"
+#define ANSI_COLOR_GRAY    "\x1b[90m"
 
 Rectangle boundary (float x, float y, const char* text, Font font);
 
@@ -134,5 +143,7 @@ void logBasicImpl(const char* caller, LogPreset p);
 
 Vector2 ivec2vec (IntVector2 iv);
 IntVector2 vec2ivec (Vector2 v);
+
+extern char* filterFunc;
 
 #endif

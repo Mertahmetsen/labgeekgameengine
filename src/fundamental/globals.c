@@ -49,7 +49,7 @@ void delta (void)
 }
 
 void defaultGlobals(void) {
-    g_dFont = LoadFontEx("resources/fonts/font1.ttf", 48, NULL, 0);
+    g_dFont = LoadFontEx("../../resources/fonts/font1.ttf", 48, NULL, 0);
     g_dTbColor = WHITE;
     g_dCam.offset = vec(GetScreenWidth()/2.0f, GetScreenHeight()/2.0f);
     g_targetFPS = 60;

@@ -1,6 +1,8 @@
 #include "basic.h"
 
 VerboseStatus g_b_verboseStatus = ALL;
+char g_filterFuncBuffer[DIR_MAX_LEN] = {0};
+char* filterFunc = NULL;
 
 Rectangle boundary (float x, float y, const char* text, Font font)
 {
@@ -62,7 +64,34 @@ void logHandler(int logtype, const char *format, va_list args)
             return;
     }
     vsnprintf(buffer, sizeof(buffer), format, args);
-    printf("%s\n", buffer);
+    if (filterFunc != NULL && filterFunc[0] != '\0') {
+      char targetBracket[DIR_MAX_LEN];
+      snprintf(targetBracket, sizeof(targetBracket), "[%s]", filterFunc);
+      if (strstr(buffer, targetBracket) == NULL) {
+        return;
+      }
+    }
+    const char* colorCode = ANSI_COLOR_RESET;
+    switch (logtype) {
+        case LOG_TRACE:
+        case LOG_DEBUG:
+            colorCode = ANSI_COLOR_GRAY;
+            break;
+        case LOG_INFO:
+            colorCode = ANSI_COLOR_GREEN;
+            break;
+        case LOG_WARNING:
+            colorCode = ANSI_COLOR_YELLOW;
+            break;
+        case LOG_ERROR:
+        case LOG_FATAL:
+            colorCode = ANSI_COLOR_RED;
+            break;
+        default:
+            colorCode = ANSI_COLOR_RESET;
+            break;
+    }
+    printf("%s%s" ANSI_COLOR_RESET "\n", colorCode, buffer);
 }
 
 void initLogHandler (VerboseStatus status)
@@ -107,10 +136,6 @@ void logBasicImpl(const char* caller, LogPreset p)
   }
   TraceLog(logtype, "[%s] %s", caller, msg);
 }
-
-#define TraceLogCaller(type, format, ...) \
-    TraceLog(type, "[%s] " format, __func__, ##__VA_ARGS__)
-#define logBasic(p) logBasicImpl(__func__, (p))
 
 Vector2 ivec2vec (IntVector2 iv)
 {

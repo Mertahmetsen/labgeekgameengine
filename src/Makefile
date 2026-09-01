@@ -4,7 +4,7 @@ BUILD_TYPE ?= dynamic
 # Toolchain & Flags
 CC      := gcc
 CFLAGS  := -I. -O3 -Wall -Wextra -Wpedantic -fsanitize=address -g
-LDFLAGS := -lraylib -lm -fsanitize=address
+LDFLAGS := -lraylib -lm -lcargs -fsanitize=address
 
 # Locate sources, excluding main.c
 LIB_SRCS := $(filter-out ./main.c, $(shell find . -maxdepth 2 -type f -name "*.c"))
