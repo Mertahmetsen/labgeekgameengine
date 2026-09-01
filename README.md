@@ -2,20 +2,18 @@
 Lab Geek Game Engine is the game engine specifically designed for the ease-of-development for the currently on-development indie game Lab Geek. Developed by [\_\_merahm\_\_ (Mertahmetsen)](https://github.com/Mertahmetsen) and [ra1n (ra1n321)](https://github.com/ra1n321), **LGGE's primary principle is to provide readable code while sacrificing complex features as little as possible.** LGGE is written in pure C and built from reliable and efficient libraries [Raylib](https://github.com/raysan5/raylib) and [RayGUI](https://github.com/raysan5/raygui). LGGE also embraces the core idea behind the Raylib library, to quote directly from the [Raylib GitHub Repository](https://github.com/raysan5/raylib):
 >_"...a programming library to enjoy videogames programming; no fancy interface, no visual helpers, no debug button... just coding in the most pure spartan-programmers way."_
 ## Before you read!
-I am not a professional C programmer by any means. There are many unorthodox (and sometimes risky) design choices made in this library. *Hey, at least the code compiles, no?*
+I am not a professional C programmer by any means. There are many unorthodox (and sometimes risky) design choices made in this library. Also, LGGE is not made for general-purpose game development, but is designed specifically for the development of the game "Lab Geek".
 ## Before you compile!
-- LGGE is a header-only library with a primitive design style, meaning you don't need to compile the source code into a separate library in order to work with it. You also *can't* compile the source code into a separate library either without major modifications to the source code *(see: [Dynamic Library Experimental Branch](https://github.com/Mertahmetsen/labgeekgameengine/tree/dynamic-libs-experiment))*.
-- LGGE is a library written in Linux. As of [v0.1.1](https://github.com/Mertahmetsen/labgeekgameengine/releases/tag/v0.1.1-alpha.2), the library does not use any features that are native to Linux. However, cross-platform compilation has not been tested yet. 
-- Both Raylib and RayGUI libraries must be installed locally as **shared libraries**. [RayGUI already kind of recommends you to install itself as a **shared library**](https://github.com/raysan5/raygui#building), but you also need to install Raylib as a **shared library** as well. If you install these libraries as static libraries, or if you do not even install them at all, LGGE will most likely either fail to compile, or become unstable.
-- Although the library consists of many *seemingly-independent* headers, in reality, some of these headers can be quite dependent on each other.  Some headers like *"fundamental/basic.h"* are vital, while some headers like *"obsolete/render-groups.h"* have became obsolete in the development.
+- You can download the source code and compile it as a static or shared library. You can either pull the repository and use the `Makefile` inside the `dev` folder to automatically compile the library and the entry point file, or compile the engine code manually yourself in your own desired way.
+- LGGE is a library developed on Linux. It does not intentionally use any platform-specific APIs. However, cross-platform compilation has still not been tested yet. 
+### Dependencies
+- Raylib must be installed locally as **shared libraries**. [RayGUI already kind of recommends you to install itself as a **shared library**](https://github.com/raysan5/raygui#building), but you also need to install Raylib as a **shared library** as well. If you install these libraries as static libraries, or if you do not even install them at all, LGGE will most likely either fail to compile, or become unstable. *Check FAQ if you're feeling like it.*
 ## Standard Code Structure
-Before [v0.1.1](https://github.com/Mertahmetsen/labgeekgameengine/releases/tag/v0.1.1-alpha.2), LGGE used a code structure that heavily relied on "maps", which were code blocks that handled many different features and were recompiled at runtime. However, from [v0.1.1](https://github.com/Mertahmetsen/labgeekgameengine/releases/tag/v0.1.1-alpha.2) and onwards, this design is slowly being abandoned and being replaced with a much better *(and cross-platform)* alternative called "scenes". *(This is because the design of maps relied heavily on some linux backend libraries, and the terminology was also causing issues.)* Scenes are code blocks that are similar to maps, but are handled differently by the LGGE library.
-
 A standard code written using LGGE consists of two main parts:
 1. The Runner file that includes the `main()` function.
 2. The Scene file that handles most of the game loop.
 ### The Runner File
-The Runner File acts as a host executable. It's responsibilities include:
+The Runner File acts as a host executable. Its responsibilities include:
 - Initializing OS-level runtime state, window contexts, and Raylib defaults.
 - Handling global memory before code execution.
 - Handles fallback features.
@@ -32,7 +30,7 @@ As mentioned earlier in the previous section, the code will consist of two main 
 1. The "Entry Point/Runner" file that has the **main()** function.
 2. The "Scene" file that will mostly handle the game loop.
 
-Let's code a  very simple program written with LGGE that does nothing but clear the background with the color red, and then compile this program using GCC. Now, because LGGE is in early stages of development, some of the stuff inside the code might change, but the general structure will most likely stay the same. We will assume that the compiled binary will be in "./", the scene file will be in "resources/scenes/" and the headers will be inside "dev/src/".
+Let's code a  very simple program written with LGGE that does nothing but clear the background with the color red, and then compile this program using the Makefile LGGE provides. Now, because LGGE is in early stages of development, some of the stuff inside the code might change, but the general structure will most likely stay the same. We will assume that the compiled binary will be in "dev/src", the scene file will be in "../../resources/scenes/" and the headers will be inside "dev/src" as well.
 ### The Runner File
 We will name our file `main.c` for it to be obvious that it holds the `main()` function. After we see the full file, I will explain every line as clear as possible. Here it is:
 
@@ -79,7 +77,7 @@ This one is not mandatory, you can set the working directory wherever you want, 
 ```c
 initLogHandler(COMPLETE);
 ```
-LGGE uses it's own log handling rather than using the `TraceLog()` function Raylib offers. The `COMPLETE` parameter tells the initializer that every single log message will be printed on the console, no matter the "log level".
+LGGE uses its own log handling rather than using the `TraceLog()` function Raylib offers. The `COMPLETE` parameter tells the initializer that every single log message will be printed on the console, no matter the "log level".
 ```c
 preWinInitGlobals();
 ```
@@ -152,23 +150,37 @@ static void myscene_onUpdate (void) {
 ```
 All we want our scene to do, is to clear the background with the color red. We begin drawing with `BeginDrawing()`, Clear the background red with `ClearBackground(RED)` and end drawing with `EndDrawing()`.
 ### Compilation
-Let's compile our code with this simple line:
-```sh
-gcc main.c -o ./bin -lraylib -lm
+Now is time to compile our code! We will use the `Makefile` that is provided by LGGE:
+#### Compile as Shared Library
+```bash
+foo@bar:~$ make
 ```
-This tells the `gcc` compiler *"I want to compile this file `main.c`, I want the compiled output's name to be `bin` and I will use the `raylib` and `math` libraries.*
+Compiles LGGE as a shared library and compiles the entry point file.
+#### Compile as Static Library
+```bash
+foo@bar:~$ make BUILD_TYPE=static
+```
+Does the same thing as the other one but it compiles as a static library.
 ## FAQ
 These are the questions that were asked to me by many people, or will most likely be asked by many people.
 
 > Why use C?
 
 Because at the time of starting to write the library, the language I know the best was C. Since I have decided that I will use Raylib at the time, and since Raylib only supports C and C++, the only realistic alternative I had to C was C++. But as any C++ dev will tell you, **C++ is not C with some "extra stuff"**. These languages embrace different design principles. And I not only have very limited knowledge of C++, I also simply do not like C++'s syntax. I feel like it verbosifies stuff more than it should, at least for writing a library that focuses on code readibility. And while C is an old language and is slowly starting to become overshadowed by alternatives like Rust, it is still a semi-popular language with good enough community support.
+> Why do I have to have RayGUI installed as a shared library?
+
+I'll be 100% honest here, ***you most likely do not***. It's just that ***I*** have it installed as a shared library on the computer I use to develop LGGE, and I don't want to hit the brick wall of *"but it worked on my PC!"*. If you don't want to install RayGUI as a shared library and use it as a header-only library ~~*(for WHATEVER reason, compiling it takes like 5 minutes at worst case scenario)*~~, just don't. I just can't guarantee that stuff won't break when you do it that way.
 > Why write your own game engine while you can use an already existing one?
 
 Writing my own game engine has been a goal that I had for a very long time. Even though I had tried using other engines like Unity, they felt overwhelming to use. Also, I like the part of programming where you sit behind two monitors, one has the code editor while the other one has the terminal open. I like the bare-bones kind of programming.
 > Do you use AI in the engine's development?
 
 I would never copy-paste AI code and tell people it's my own. You can be sure that the engine's code is written completely by me. I only use AI to learn more about the capabilities of the C language itself, and in intense debugging sessions that sometimes take hours. Why do I not ask programming forums for help rather than AI? Because *I have a life*, and I can't just wait for a notification on my phone for 3 days just to be hit with "random-nitwit-342" answering my post with *"that is the most DISGUSTING code I have EVER seen! GIVE UP!"*.
+## Development History / Former Significant Design Changes
+- Before [Pre-Alpha 2 (v0.1.1)](https://github.com/Mertahmetsen/labgeekgameengine/releases/tag/v0.1.1-alpha.2), LGGE used a code structure that heavily relied on "maps", which were code blocks that handled many different features and were recompiled at runtime. However, from [Pre-Alpha 2 (v0.1.1)](https://github.com/Mertahmetsen/labgeekgameengine/releases/tag/v0.1.1-alpha.2) and onwards, this design has been abandoned and replaced with a much better *(and cross-platform)* alternative called "scenes". *(This is because the design of maps relied heavily on some linux backend libraries, and the terminology was also causing issues.)*
+- LGGE stopped using platform-specific APIs in [Pre-Alpha 2 (v0.1.1)](https://github.com/Mertahmetsen/labgeekgameengine/releases/tag/v0.1.1-alpha.2).
+- LGGE switched away from a header-only library design in [Pre-Alpha 3 (v0.2.0)](https://github.com/Mertahmetsen/labgeekgameengine/releases/tag/v0.2.0-alpha.3).
+- LGGE started providing a built-in Makefile in [Pre-Alpha 3 (v0.2.0)](https://github.com/Mertahmetsen/labgeekgameengine/releases/tag/v0.2.0-alpha.3).
 ## Special Thanks
 
  - [Special thanks to everyone who contributed to the Raylib project](https://github.com/raysan5/raylib/graphs/contributors).
