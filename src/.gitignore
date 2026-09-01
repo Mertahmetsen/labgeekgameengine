@@ -5,3 +5,5 @@ logs/gcclog.log
 logs/gitlog.log
 logs
 bin
+*.a
+*.so
